@@ -1,0 +1,143 @@
+fileFormatVersion: 2
+guid: eaae50e32b5d63e44b02f5439e8ef074
+timeCreated: 1467553479
+licenseType: Store
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Backbone_01
+    100002: Backbone_02
+    100004: EyeL
+    100006: EyeR
+    100008: FootL_01
+    100010: FootL_02
+    100012: FootR_01
+    100014: FootR_02
+    100016: Head
+    100018: LegL_01
+    100020: LegL_02
+    100022: LegR_01
+    100024: LegR_02
+    100026: Master
+    100028: Mouth
+    100030: Mouth_Bottom
+    100032: Mouth_Top
+    100034: Neck
+    100036: Rig_Seagull
+    100038: //RootNode
+    100040: Seagull
+    100042: Tail
+    100044: WingL_01
+    100046: WingL_02
+    100048: WingL_03
+    100050: WingR_01
+    100052: WingR_02
+    100054: WingR_03
+    400000: Backbone_01
+    400002: Backbone_02
+    400004: EyeL
+    400006: EyeR
+    400008: FootL_01
+    400010: FootL_02
+    400012: FootR_01
+    400014: FootR_02
+    400016: Head
+    400018: LegL_01
+    400020: LegL_02
+    400022: LegR_01
+    400024: LegR_02
+    400026: Master
+    400028: Mouth
+    400030: Mouth_Bottom
+    400032: Mouth_Top
+    400034: Neck
+    400036: Rig_Seagull
+    400038: //RootNode
+    400040: Seagull
+    400042: Tail
+    400044: WingL_01
+    400046: WingL_02
+    400048: WingL_03
+    400050: WingR_01
+    400052: WingR_02
+    400054: WingR_03
+    4300000: Seagull
+    7400000: Attack_A
+    7400002: Attack_B
+    7400004: Death
+    7400006: Drink
+    7400008: Eat
+    7400010: Fly_A
+    7400012: Fly_B
+    7400014: Hit
+    7400016: Idle_A
+    7400018: Idle_B
+    7400020: Idle_C
+    7400022: Idle_D
+    7400024: Main_Empty
+    9500000: //RootNode
+    13700000: Seagull
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
