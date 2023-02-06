@@ -4,5 +4,32 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Personnages/Cute Animal Pet (Dragon Pack)/DemoScene/Dragon_11.unity
+    guid: 576fb2bc7f66ee14594226541d6cfeb3
+  - enabled: 1
+    path: Assets/Personnages/Cute Animal Pet (Dragon Pack)/DemoScene/Dragon_12.unity
+    guid: 3b2cca10ce914c5469f70852744f9f11
+  - enabled: 1
+    path: Assets/Personnages/Cute Animal Pet (Dragon Pack)/DemoScene/Dragon_13.unity
+    guid: e45397c665bbe814abbd1fac50ac4aae
+  - enabled: 1
+    path: Assets/Personnages/Cute Animal Pet (Dragon Pack)/DemoScene/Dragon_21.unity
+    guid: 855a7e00f5702d04eaed437c5e152db3
+  - enabled: 1
+    path: Assets/Personnages/Cute Animal Pet (Dragon Pack)/DemoScene/Dragon_22.unity
+    guid: 31d395f9b9eed7c498d10504e6cf9a99
+  - enabled: 1
+    path: Assets/Personnages/Cute Animal Pet (Dragon Pack)/DemoScene/Dragon_23.unity
+    guid: b8db935c94cb98445b36cafb020a1e80
+  - enabled: 1
+    path: Assets/Personnages/Cute Animal Pet (Dragon Pack)/DemoScene/Dragon_31.unity
+    guid: b42250a0cd6299f40bf35918937c59cd
+  - enabled: 1
+    path: Assets/Personnages/Cute Animal Pet (Dragon Pack)/DemoScene/Dragon_32.unity
+    guid: e4d1ba7613df8d243bc4d52255e5ff27
+  - enabled: 1
+    path: Assets/Personnages/Cute Animal Pet (Dragon Pack)/DemoScene/Dragon_33.unity
+    guid: 4a7eb67dd6521ee40947d33711e83c1c
   m_configObjects: {}
