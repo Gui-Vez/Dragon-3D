@@ -913,8 +913,12 @@ MonoBehaviour:
   - {fileID: 2800000, guid: d4491c0362ed99f4385b2db9d61d5b32, type: 3}
   bodyTextureArray:
   - {fileID: 2800000, guid: a292b2d3acfdb1640bddf4e59786bec7, type: 3}
+  - {fileID: 2800000, guid: eaa80a69feb89a243b646193f7563d7e, type: 3}
   - {fileID: 2800000, guid: 45958be8016f8ad44886527da383543f, type: 3}
   - {fileID: 2800000, guid: ddcbc1e829527fc46b6e7cda290d122f, type: 3}
+  - {fileID: 2800000, guid: 1c44c9eacd2d57a4198a0fbf58eea701, type: 3}
+  - {fileID: 2800000, guid: 7e867841ae90d13428c3375fa0faae85, type: 3}
+  - {fileID: 2800000, guid: 4f4f1c070d771c947957644c96c1d901, type: 3}
   - {fileID: 2800000, guid: 749b7db237a964945b4d72e1d5799c22, type: 3}
   effPrefabArray:
   - {fileID: 594439495}

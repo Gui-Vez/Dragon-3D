@@ -1444,10 +1444,14 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 2b0b32a6f7e003e43ac9ae17c052fa33, type: 3}
   - {fileID: 2800000, guid: dc3fbdfa196c4004aa28e71bb250b8b1, type: 3}
   bodyTextureArray:
-  - {fileID: 2800000, guid: 8f72ac2de30bdf94c9dec4f1fffeb3d2, type: 3}
-  - {fileID: 2800000, guid: 6fa29db9eb4810e4786fe9e1914657a0, type: 3}
   - {fileID: 2800000, guid: eb6058e023633114e937f5065d523cef, type: 3}
+  - {fileID: 2800000, guid: 6fa29db9eb4810e4786fe9e1914657a0, type: 3}
+  - {fileID: 2800000, guid: 89d0fc235eb3ee9498d63a04c7dc7543, type: 3}
   - {fileID: 2800000, guid: 82d24f89e89c20a458b8cc7a0721f867, type: 3}
+  - {fileID: 2800000, guid: 8f72ac2de30bdf94c9dec4f1fffeb3d2, type: 3}
+  - {fileID: 2800000, guid: 16622327153924043b0dce64f78d5766, type: 3}
+  - {fileID: 2800000, guid: fbf89fd86a4faa047ad5ee134df44ca2, type: 3}
+  - {fileID: 2800000, guid: 8106869f33c8ffe4694f506f5a6d5f09, type: 3}
   effPrefabArray:
   - {fileID: 323327038}
   - {fileID: 323327038}

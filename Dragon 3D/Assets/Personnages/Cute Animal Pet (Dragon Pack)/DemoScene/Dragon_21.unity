@@ -3240,7 +3240,11 @@ MonoBehaviour:
   bodyTextureArray:
   - {fileID: 2800000, guid: efb727e143333fd48ab1ff85e0b1a953, type: 3}
   - {fileID: 2800000, guid: 5af4d713c6b5c034ebfc53fc64c11253, type: 3}
+  - {fileID: 2800000, guid: 57147830dc2c58940820a702723a7c7b, type: 3}
   - {fileID: 2800000, guid: 40a5cf44f268ea043907a9a57c3808ac, type: 3}
+  - {fileID: 2800000, guid: 0dbd594ab4e54104b8cfedbc187fe1da, type: 3}
+  - {fileID: 2800000, guid: 24a765a0c70e69e49b8e94561aa2bd87, type: 3}
+  - {fileID: 2800000, guid: ec5c2e80209a8da4f8115a2dfdb4d981, type: 3}
   - {fileID: 2800000, guid: 92796f62bc0dfb8448f5d6f21b0c8950, type: 3}
   effPrefabArray:
   - {fileID: 1622124565}

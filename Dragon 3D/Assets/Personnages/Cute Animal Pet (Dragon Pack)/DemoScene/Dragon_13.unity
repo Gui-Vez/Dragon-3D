@@ -2834,6 +2834,10 @@ MonoBehaviour:
   - {fileID: 2800000, guid: b4972ea3f187c694197289ceb31a5068, type: 3}
   - {fileID: 2800000, guid: 75caae7d606ec544ba56ee98e5d22503, type: 3}
   - {fileID: 2800000, guid: 9341ddd996aa0df41bdb0cdcedbf3649, type: 3}
+  - {fileID: 2800000, guid: c3d66b18e2d13c249aa6d293611737e6, type: 3}
+  - {fileID: 2800000, guid: ec6849ad0e282ff428fcf4c17657f2e9, type: 3}
+  - {fileID: 2800000, guid: 75fc17b3ba48ccd48969d5ffaa3a9e3e, type: 3}
+  - {fileID: 2800000, guid: 8810031d41ac10b4ca3294fe5d6db62c, type: 3}
   effPrefabArray:
   - {fileID: 791515710}
   - {fileID: 791515710}

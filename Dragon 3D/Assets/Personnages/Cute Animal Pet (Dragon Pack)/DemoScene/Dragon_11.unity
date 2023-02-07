@@ -727,6 +727,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 6.4261594
       objectReference: {fileID: 0}
+    - target: {fileID: 137523610121192174, guid: e44285a4d26bce34baed5b226b315d78, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: cced1782da000a946bc2b609d315941a, type: 2}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: e44285a4d26bce34baed5b226b315d78, type: 3}
@@ -781,6 +785,10 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 8b9824b5c0144e349a6c10ab743b0eb1, type: 3}
   - {fileID: 2800000, guid: 412bfc80c9ab8524dae7c8229e40357a, type: 3}
   - {fileID: 2800000, guid: a885506512b56bf468cb95a1571d2e3e, type: 3}
+  - {fileID: 2800000, guid: af3a0f4569ec92a4f9d94e8a48bb95a6, type: 3}
+  - {fileID: 2800000, guid: 0ee6f497ead469a4b838cd15e8a683a4, type: 3}
+  - {fileID: 2800000, guid: 129e31fe2e8b62842812fbdbd1c8e566, type: 3}
+  - {fileID: 2800000, guid: 402490c6b12b2ee48bc6d27727b9f95b, type: 3}
   effPrefabArray:
   - {fileID: 1050851925}
   - {fileID: 1050851925}
