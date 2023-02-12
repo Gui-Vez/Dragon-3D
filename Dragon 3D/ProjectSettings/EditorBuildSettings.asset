@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Jeu.unity
     guid: 8667aa116e88b56458b63973061fbabc
   - enabled: 1
+    path: Assets/Scenes/Galerie.unity
+    guid: 05bf53b1b76e8c64bb3faeffb20aa6db
+  - enabled: 1
     path: Assets/Personnages/Cute Animal Pet (Dragon Pack)/DemoScene/Dragon_11.unity
     guid: 576fb2bc7f66ee14594226541d6cfeb3
   - enabled: 1
