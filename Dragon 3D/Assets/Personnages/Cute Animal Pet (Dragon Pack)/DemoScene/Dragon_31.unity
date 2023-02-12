@@ -1430,7 +1430,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Animal: {fileID: 675969599}
-  ShootPoint: {fileID: 707568923}
+  ShootPoint: {fileID: 675969601}
   bodyMesh: {fileID: 675969602}
   faceMesh: {fileID: 675969600}
   faceTextureArray:

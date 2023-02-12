@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/EcranTitre.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/Jeu.unity
+    guid: 8667aa116e88b56458b63973061fbabc
+  - enabled: 1
     path: Assets/Personnages/Cute Animal Pet (Dragon Pack)/DemoScene/Dragon_11.unity
     guid: 576fb2bc7f66ee14594226541d6cfeb3
   - enabled: 1
@@ -32,4 +38,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Personnages/Cute Animal Pet (Dragon Pack)/DemoScene/Dragon_33.unity
     guid: 4a7eb67dd6521ee40947d33711e83c1c
+  - enabled: 1
+    path: Assets/Personnages/Lowpoly Toon Seagull/Demo/Seagull_Demo.unity
+    guid: d5aba372c4a25f14aa926e5a707b1f86
   m_configObjects: {}
