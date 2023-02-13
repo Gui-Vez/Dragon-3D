@@ -12,8 +12,9 @@ public class GestionScenes : MonoBehaviour
     /* Gestion des scènes */
     /* ****************** */
 
-
     Scene sceneActuelle;
+
+    GameObject boutonsAnimationsContenant;
 
     void Start()
     {
@@ -30,7 +31,9 @@ public class GestionScenes : MonoBehaviour
                 break;
 
 
-            case "Jeu":
+            case "Galerie":
+
+                boutonsAnimationsContenant = GameObject.Find("Animations");
 
                 AssignerTextes("FR");
 
@@ -38,9 +41,36 @@ public class GestionScenes : MonoBehaviour
         }
     }
 
+    void Update()
+    {
+        /* (À optimiser) */
+
+        // Donner des instructions aux scènes respectives
+        switch (sceneActuelle.name)
+        {
+            case "EcranTitre":
+
+                break;
+
+
+            case "Galerie":
+
+                if (Input.GetKey(KeyCode.Space))
+                {
+                    AssignerTextes("FR");
+                }
+
+                else
+                {
+                    AssignerTextes("EN");
+                }
+
+                break;
+        }
+    }
+
     void AssignerTextes(string langage)
     {
-        GameObject boutonsAnimationsContenant = GameObject.Find("Boutons Animations");
         List<GameObject> boutonAnimationsListe = new List<GameObject>();
 
         for (int i = 0; i < boutonsAnimationsContenant.transform.childCount; i++)
@@ -57,7 +87,9 @@ public class GestionScenes : MonoBehaviour
         textesBoutonsAnimEN.AddRange(new[]
         { "Idle", "Stand", "Walk", "Run", "Attack", "Attack Stand", "Damage", "Breath", "Die", "Random" });
 
+
         int j = 0;
+
         foreach (GameObject texteAnimation in boutonAnimationsListe)
         {
             TMP_Text tmp = texteAnimation.transform.GetChild(0).GetComponent<TMP_Text>();
@@ -65,38 +97,33 @@ public class GestionScenes : MonoBehaviour
             switch (langage)
             {
                 case "FR":
+
                     tmp.text = textesBoutonsAnimFR[j];
 
                     j++;
+
                     if (j >= textesBoutonsAnimFR.Count)
                     {
                         j = 0;
                     }
+
                     break;
 
+
+                case "EN":
                 default:
+
                     tmp.text = textesBoutonsAnimEN[j];
 
                     j++;
+
                     if (j >= textesBoutonsAnimEN.Count)
                     {
                         j = 0;
                     }
+
                     break;
             }
-        }
-    }
-
-    void Update()
-    {
-        if (Input.GetKey(KeyCode.Space))
-        {
-            AssignerTextes("FR");
-        }
-
-        else
-        {
-            AssignerTextes("null");
         }
     }
 
