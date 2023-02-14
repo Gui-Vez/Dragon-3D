@@ -16,6 +16,8 @@ public class GestionScenes : MonoBehaviour
 
     GameObject boutonsAnimationsContenant;
 
+    public float tempsChargement = 1.0f;
+
     void Start()
     {
         // Trouver la scène actuelle
@@ -26,7 +28,7 @@ public class GestionScenes : MonoBehaviour
         {
             case "EcranTitre":
 
-                StartCoroutine(ChargerScene("Jeu", 3f));
+                //StartCoroutine(ChargerScene("Jeu", 3f));
 
                 break;
 
@@ -124,6 +126,18 @@ public class GestionScenes : MonoBehaviour
 
                     break;
             }
+        }
+    }
+
+    public void GererBoutons(GameObject bouton)
+    {
+        switch (bouton.name)
+        {
+            case "Jouer":
+
+                StartCoroutine(ChargerScene("Jeu", tempsChargement));
+
+                break;
         }
     }
 
