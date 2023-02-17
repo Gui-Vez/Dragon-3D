@@ -23,7 +23,7 @@ public class GererAssetsDragon : MonoBehaviour
 
     void Update()
     {
-        
+
     }
 
     public void AnimerDragon(string animation)

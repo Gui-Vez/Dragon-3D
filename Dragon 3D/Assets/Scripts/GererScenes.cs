@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
 using TMPro;
 
-public class GestionScenes : MonoBehaviour
+public class GererScenes : MonoBehaviour
 {
     /* ****************** */
     /* Gestion des scènes */
@@ -17,6 +17,10 @@ public class GestionScenes : MonoBehaviour
     GameObject boutonsAnimationsContenant;
 
     public float tempsChargement = 1.0f;
+
+    string[] optionsLangages = { "EN", "FR" };
+    int indexLangueActuelle = 0;
+
 
     void Start()
     {
@@ -37,15 +41,16 @@ public class GestionScenes : MonoBehaviour
 
                 boutonsAnimationsContenant = GameObject.Find("Animations");
 
-                AssignerTextes("FR");
-
                 break;
         }
     }
 
     void Update()
     {
-        /* (À optimiser) */
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            QuitterJeu();
+        }
 
         // Donner des instructions aux scènes respectives
         switch (sceneActuelle.name)
@@ -57,14 +62,10 @@ public class GestionScenes : MonoBehaviour
 
             case "Galerie":
 
-                if (Input.GetKey(KeyCode.Space))
+                if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    AssignerTextes("FR");
-                }
-
-                else
-                {
-                    AssignerTextes("EN");
+                    indexLangueActuelle = (indexLangueActuelle + 1) % optionsLangages.Length;
+                    AssignerTextes(optionsLangages[indexLangueActuelle]);
                 }
 
                 break;
@@ -149,5 +150,22 @@ public class GestionScenes : MonoBehaviour
         SceneManager.LoadScene(nomScene);
 
         yield return null;
+    }
+
+    public void QuitterJeu()
+    {
+        // Si cela joue dans l'éditeur d'Unity,
+        if (Application.isEditor)
+        {
+            // Arrêter la scène de jouer
+            UnityEditor.EditorApplication.isPlaying = false;
+        }
+
+        // Sinon,
+        else
+        {
+            // Quitter l'application directement
+            Application.Quit();
+        }
     }
 }
