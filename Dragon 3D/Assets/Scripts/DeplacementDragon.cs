@@ -16,7 +16,7 @@ public class DeplacementDragon : MonoBehaviour
     public float reculMurs = 0.05f;
     public float delaiBouger = 0.25f;
 
-    private void Update()
+    void Update()
     {
         //// Défilement Horizontal ////
         if (!estEnContactAvecUnMurHorizontal)
@@ -56,7 +56,7 @@ public class DeplacementDragon : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Mur")
         {

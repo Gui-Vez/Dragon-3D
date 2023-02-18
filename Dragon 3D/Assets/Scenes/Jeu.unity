@@ -334,6 +334,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tempsChargement: 1
+  skyboxes: []
 --- !u!1 &101511846
 GameObject:
   m_ObjectHideFlags: 0
@@ -776,7 +777,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1567656890615964, guid: e44285a4d26bce34baed5b226b315d78, type: 3}
       propertyPath: m_Name
-      value: Dragon 11
+      value: Dragon_11
       objectReference: {fileID: 0}
     - target: {fileID: 1567656890615964, guid: e44285a4d26bce34baed5b226b315d78, type: 3}
       propertyPath: m_IsActive

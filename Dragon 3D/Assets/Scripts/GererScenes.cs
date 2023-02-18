@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
 using TMPro;
 
@@ -12,7 +10,7 @@ public class GererScenes : MonoBehaviour
     /* Gestion des scènes */
     /* ****************** */
 
-    Scene sceneActuelle;
+    public static Scene sceneActuelle;
 
     GameObject boutonsAnimationsContenant;
 
@@ -20,6 +18,9 @@ public class GererScenes : MonoBehaviour
 
     string[] optionsLangages = { "EN", "FR" };
     int indexLangueActuelle = 0;
+
+    public Material[] skyboxes;
+    private int indexSkyboxActuel = 0;
 
 
     void Start()
@@ -40,6 +41,8 @@ public class GererScenes : MonoBehaviour
             case "Galerie":
 
                 boutonsAnimationsContenant = GameObject.Find("Animations");
+
+                RenderSettings.skybox = skyboxes[indexSkyboxActuel];
 
                 break;
         }
@@ -62,10 +65,22 @@ public class GererScenes : MonoBehaviour
 
             case "Galerie":
 
-                if (Input.GetKeyDown(KeyCode.Space))
+                if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Mouse2))
                 {
                     indexLangueActuelle = (indexLangueActuelle + 1) % optionsLangages.Length;
                     AssignerTextes(optionsLangages[indexLangueActuelle]);
+                }
+
+                if (Input.GetKeyDown(KeyCode.Backspace) || Input.GetKeyDown(KeyCode.Mouse1))
+                {
+                    indexSkyboxActuel++;
+                    if (indexSkyboxActuel >= skyboxes.Length)
+                    {
+                        indexSkyboxActuel = 0;
+                    }
+
+                    RenderSettings.skybox = skyboxes[indexSkyboxActuel];
+                    RenderSettings.skybox.SetFloat("_Rotation", transform.eulerAngles.y);
                 }
 
                 break;
@@ -77,9 +92,7 @@ public class GererScenes : MonoBehaviour
         List<GameObject> boutonAnimationsListe = new List<GameObject>();
 
         for (int i = 0; i < boutonsAnimationsContenant.transform.childCount; i++)
-        {
             boutonAnimationsListe.Add(boutonsAnimationsContenant.transform.GetChild(i).gameObject);
-        }
 
 
         List<string> textesBoutonsAnimFR = new List<string>();
@@ -106,9 +119,7 @@ public class GererScenes : MonoBehaviour
                     j++;
 
                     if (j >= textesBoutonsAnimFR.Count)
-                    {
                         j = 0;
-                    }
 
                     break;
 
@@ -121,9 +132,7 @@ public class GererScenes : MonoBehaviour
                     j++;
 
                     if (j >= textesBoutonsAnimEN.Count)
-                    {
                         j = 0;
-                    }
 
                     break;
             }
@@ -134,9 +143,17 @@ public class GererScenes : MonoBehaviour
     {
         switch (bouton.name)
         {
+            case "Play":
             case "Jouer":
 
                 StartCoroutine(ChargerScene("Jeu", tempsChargement));
+
+                break;
+
+            case "Gallery":
+            case "Galerie":
+
+                StartCoroutine(ChargerScene("Galerie", tempsChargement));
 
                 break;
         }
