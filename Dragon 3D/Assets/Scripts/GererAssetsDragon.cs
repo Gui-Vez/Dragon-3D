@@ -54,7 +54,8 @@ public class GererAssetsDragon : MonoBehaviour
                 EffectClear();
                 Animal.GetComponent<Animation>().wrapMode = WrapMode.Loop;
                 Animal.GetComponent<Animation>().CrossFade("Idle");
-                faceMesh.materials[0].SetTexture("_MainTex", faceTextureArray[0]);
+                //faceMesh.materials[0].SetTexture("_MainTex", faceTextureArray[0]);
+                TexturerYeux(0);
                 break;
 
             case "Stand":
@@ -62,7 +63,8 @@ public class GererAssetsDragon : MonoBehaviour
                 EffectClear();
                 Animal.GetComponent<Animation>().wrapMode = WrapMode.Loop;
                 Animal.GetComponent<Animation>().CrossFade("Stand");
-                faceMesh.materials[0].SetTexture("_MainTex", faceTextureArray[5]);
+                //faceMesh.materials[0].SetTexture("_MainTex", faceTextureArray[5]);
+                TexturerYeux(5);
                 if (GameObject.FindGameObjectWithTag("Effect") == null) GameObject.Instantiate(effPrefabArray[6]);
                 break;
 
@@ -71,7 +73,8 @@ public class GererAssetsDragon : MonoBehaviour
                 EffectClear();
                 Animal.GetComponent<Animation>().wrapMode = WrapMode.Loop;
                 Animal.GetComponent<Animation>().CrossFade("Walk");
-                faceMesh.materials[0].SetTexture("_MainTex", faceTextureArray[0]);
+                //faceMesh.materials[0].SetTexture("_MainTex", faceTextureArray[0]);
+                TexturerYeux(0);
                 break;
 
             case "Run":
@@ -79,7 +82,8 @@ public class GererAssetsDragon : MonoBehaviour
                 EffectClear();
                 Animal.GetComponent<Animation>().wrapMode = WrapMode.Loop;
                 Animal.GetComponent<Animation>().CrossFade("Run");
-                faceMesh.materials[0].SetTexture("_MainTex", faceTextureArray[6]);
+                //faceMesh.materials[0].SetTexture("_MainTex", faceTextureArray[6]);
+                TexturerYeux(6);
                 if (GameObject.FindGameObjectWithTag("Effect") == null) GameObject.Instantiate(effPrefabArray[5]);
                 break;
 
@@ -88,18 +92,20 @@ public class GererAssetsDragon : MonoBehaviour
                 EffectClear();
                 Animal.GetComponent<Animation>().wrapMode = WrapMode.Once;
                 Animal.GetComponent<Animation>().CrossFade("Attack");
-                faceMesh.materials[0].SetTexture("_MainTex", faceTextureArray[3]);
+                //faceMesh.materials[0].SetTexture("_MainTex", faceTextureArray[3]);
+                TexturerYeux(3);
 
                 playerV = new Vector3(ShootPoint.transform.position.x, ShootPoint.transform.position.y, ShootPoint.transform.position.z);
                 Instantiate(effPrefabArray[0], new Vector3(playerV.x, playerV.y, playerV.z), Animal.transform.rotation);
                 break;
 
-            case "Attack Stand":
-            case "Position d'attaque":
+            case "AttackStand":
+            case "PositionAttaque":
                 EffectClear();
                 Animal.GetComponent<Animation>().wrapMode = WrapMode.Loop;
                 Animal.GetComponent<Animation>().CrossFade("AttackStand");
-                faceMesh.materials[0].SetTexture("_MainTex", faceTextureArray[7]);
+                //faceMesh.materials[0].SetTexture("_MainTex", faceTextureArray[7]);
+                TexturerYeux(7);
                 if (GameObject.FindGameObjectWithTag("Effect") == null) GameObject.Instantiate(effPrefabArray[2]);
                 break;
 
@@ -109,6 +115,7 @@ public class GererAssetsDragon : MonoBehaviour
                 Animal.GetComponent<Animation>().wrapMode = WrapMode.Once;
                 Animal.GetComponent<Animation>().CrossFade("Damage");
                 faceMesh.materials[0].SetTexture("_MainTex", faceTextureArray[8]);
+                TexturerYeux(8);
                 if (GameObject.FindGameObjectWithTag("Effect") == null) GameObject.Instantiate(effPrefabArray[3]);
                 break;
 
@@ -117,7 +124,8 @@ public class GererAssetsDragon : MonoBehaviour
                 EffectClear();
                 Animal.GetComponent<Animation>().wrapMode = WrapMode.Loop;
                 Animal.GetComponent<Animation>().CrossFade("Eat");
-                faceMesh.materials[0].SetTexture("_MainTex", faceTextureArray[5]);
+                //faceMesh.materials[0].SetTexture("_MainTex", faceTextureArray[5]);
+                TexturerYeux(5);
                 if (GameObject.FindGameObjectWithTag("Effect") == null) GameObject.Instantiate(effPrefabArray[7]);
                 break;
 
@@ -126,7 +134,8 @@ public class GererAssetsDragon : MonoBehaviour
                 EffectClear();
                 Animal.GetComponent<Animation>().wrapMode = WrapMode.Loop;
                 Animal.GetComponent<Animation>().CrossFade("Sleep");
-                faceMesh.materials[0].SetTexture("_MainTex", faceTextureArray[4]);
+                //faceMesh.materials[0].SetTexture("_MainTex", faceTextureArray[4]);
+                TexturerYeux(4);
                 if (GameObject.FindGameObjectWithTag("Effect") == null) GameObject.Instantiate(effPrefabArray[1]);
                 break;
 
@@ -135,7 +144,8 @@ public class GererAssetsDragon : MonoBehaviour
                 EffectClear();
                 Animal.GetComponent<Animation>().wrapMode = WrapMode.Once;
                 Animal.GetComponent<Animation>().CrossFade("Breath");
-                faceMesh.materials[0].SetTexture("_MainTex", faceTextureArray[1]);
+                //faceMesh.materials[0].SetTexture("_MainTex", faceTextureArray[1]);
+                TexturerYeux(1);
                 if (GameObject.FindGameObjectWithTag("Effect") == null) GameObject.Instantiate(effPrefabArray[8]);
                 playerV = new Vector3(ShootPoint.transform.position.x, ShootPoint.transform.position.y, ShootPoint.transform.position.z);
                 Instantiate(effPrefabArray[8], new Vector3(playerV.x, playerV.y, playerV.z), Animal.transform.rotation);
@@ -146,7 +156,8 @@ public class GererAssetsDragon : MonoBehaviour
                 EffectClear();
                 Animal.GetComponent<Animation>().wrapMode = WrapMode.Once;
                 Animal.GetComponent<Animation>().CrossFade("Die");
-                faceMesh.materials[0].SetTexture("_MainTex", faceTextureArray[2]);
+                //faceMesh.materials[0].SetTexture("_MainTex", faceTextureArray[2]);
+                TexturerYeux(2);
                 if (GameObject.FindGameObjectWithTag("Effect") == null) GameObject.Instantiate(effPrefabArray[4]);
                 break;
 
@@ -163,7 +174,11 @@ public class GererAssetsDragon : MonoBehaviour
                 break;
         }
 
-        animationActuelle = animation;
+        if (animation == "Random" || animation == "Aléatoire")
+            return;
+
+        else
+            animationActuelle = animation;
     }
 
     public void TexturerCorps(string textureCorps)
@@ -203,7 +218,16 @@ public class GererAssetsDragon : MonoBehaviour
                 break;
         }
 
-        textureCorpsActuelle = textureCorps;
+        if (textureCorps == "Random" || textureCorps == "Aléatoire")
+            return;
+
+        else
+            textureCorpsActuelle = textureCorps;
+    }
+
+    void TexturerYeux(int textureYeux)
+    {
+        faceMesh.materials[0].SetTexture("_MainTex", faceTextureArray[textureYeux]);
     }
 
     public void ChangerPersonnage(string personnage)
@@ -263,6 +287,7 @@ public class GererAssetsDragon : MonoBehaviour
             {
                 personnagesJoueur[i].transform.position = positionApercuPersonnages;
                 personnageJoueurActuel.GetComponent<Animation>().CrossFade(animationActuelle);
+                faceMesh.materials[0].SetTexture("_MainTex", faceTextureArray[0]);
                 TexturerCorps(textureCorpsActuelle);
             }
 

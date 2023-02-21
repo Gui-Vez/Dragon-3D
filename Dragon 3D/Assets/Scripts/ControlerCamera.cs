@@ -33,16 +33,18 @@ public class ControlerCamera : MonoBehaviour
 
     void Start()
     {
-        transform.LookAt(_cible);
+        
         _transformEnfant = transform.GetChild(0);
     }
 
     void Update()
     {
+        _cible = GererAssetsDragon.personnageJoueurActuel.transform;
+        transform.LookAt(_cible);
+
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
         float scroll = Input.GetAxis("Mouse ScrollWheel");
-
 
         if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
         {

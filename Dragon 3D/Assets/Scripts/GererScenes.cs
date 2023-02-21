@@ -97,7 +97,7 @@ public class GererScenes : MonoBehaviour
 
         List<string> textesBoutonsAnimFR = new List<string>();
         textesBoutonsAnimFR.AddRange(new[]
-        { "Inactif", "Rester", "Marcher", "Courir", "Attaquer", "Position d'attaque", "Dégâts", "Souffler", "Mort", "Aléatoire" });
+        { "Inactif", "Rester", "Marcher", "Courir", "Attaquer", "Position Attaque", "Dégâts", "Souffler", "Mort", "Aléatoire" });
 
         List<string> textesBoutonsAnimEN = new List<string>();
         textesBoutonsAnimEN.AddRange(new[]
