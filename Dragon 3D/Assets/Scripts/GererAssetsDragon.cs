@@ -17,23 +17,30 @@ public class GererAssetsDragon : MonoBehaviour
 
     public static GameObject personnageJoueurActuel;
     public static GameObject[] personnagesJoueur;
-    public static string _animation;
-    public static string _textureCorps;
+    public static string animationActuelle;
+    public static string textureCorpsActuelle;
 
-    public Vector3 positionInitialePersonnages = new Vector3(0, 0, 0);
+    public Vector3 positionApercuPersonnages = new Vector3(0, 0, 0);
+    private Vector3 positionInitialePersonnage;
+
+    private Texture textureCorpsInitiale;
 
 
     void Start()
     {
-        personnageJoueurActuel = GameObject.FindGameObjectWithTag("Player");
-        personnagesJoueur = GameObject.FindGameObjectsWithTag("Player");
+        if (personnagesJoueur == null)
+        {
+            personnagesJoueur = GameObject.FindGameObjectsWithTag("Player");
+            personnageJoueurActuel = personnagesJoueur[0];
+        }
+
+        positionInitialePersonnage = Animal.transform.position;
+
+        textureCorpsInitiale = bodyMesh.materials[0].GetTexture("_MainTex");
 
         AnimerDragon("Idle");
-    }
 
-    void Update()
-    {
-
+        EnleverDragons();
     }
 
     public void AnimerDragon(string animation)
@@ -156,7 +163,7 @@ public class GererAssetsDragon : MonoBehaviour
                 break;
         }
 
-        _animation = animation;
+        animationActuelle = animation;
     }
 
     public void TexturerCorps(string textureCorps)
@@ -196,64 +203,75 @@ public class GererAssetsDragon : MonoBehaviour
                 break;
         }
 
-        _textureCorps = textureCorps;
+        textureCorpsActuelle = textureCorps;
     }
 
     public void ChangerPersonnage(string personnage)
     {
+        ActiverDragons();
+
         switch (personnage)
         {
-            case "Baby 1"  :
-            case "Bébé 1"  : personnageJoueurActuel = GameObject.Find("Dragon_11"); break;
-            case "Young 1" :
-            case "Jeune 1" : personnageJoueurActuel = GameObject.Find("Dragon_12"); break;
-            case "Old 1"   :
-            case "Vieux 1" : personnageJoueurActuel = GameObject.Find("Dragon_13"); break;
+            case "Baby 1" :
+            case "Bébé 1" : personnageJoueurActuel = GameObject.Find("Dragon_11"); break;
+            case "Young 1":
+            case "Jeune 1": personnageJoueurActuel = GameObject.Find("Dragon_12"); break;
+            case "Old 1"  :
+            case "Vieux 1": personnageJoueurActuel = GameObject.Find("Dragon_13"); break;
 
-            case "Baby 2"  :
-            case "Bébé 2"  : personnageJoueurActuel = GameObject.Find("Dragon_21"); break;
-            case "Young 2" :
-            case "Jeune 2" : personnageJoueurActuel = GameObject.Find("Dragon_22"); break;
-            case "Old 2"   :
-            case "Vieux 2" : personnageJoueurActuel = GameObject.Find("Dragon_23"); break;
+            case "Baby 2" :
+            case "Bébé 2" : personnageJoueurActuel = GameObject.Find("Dragon_21"); break;
+            case "Young 2":
+            case "Jeune 2": personnageJoueurActuel = GameObject.Find("Dragon_22"); break;
+            case "Old 2"  :
+            case "Vieux 2": personnageJoueurActuel = GameObject.Find("Dragon_23"); break;
 
-            case "Baby 3"  :
-            case "Bébé 3"  : personnageJoueurActuel = GameObject.Find("Dragon_31"); break;
-            case "Young 3" :
-            case "Jeune 3" : personnageJoueurActuel = GameObject.Find("Dragon_32"); break;
-            case "Old 3"   :
-            case "Vieux 3" : personnageJoueurActuel = GameObject.Find("Dragon_33"); break;
+            case "Baby 3" :
+            case "Bébé 3" : personnageJoueurActuel = GameObject.Find("Dragon_31"); break;
+            case "Young 3":
+            case "Jeune 3": personnageJoueurActuel = GameObject.Find("Dragon_32"); break;
+            case "Old 3"  :
+            case "Vieux 3": personnageJoueurActuel = GameObject.Find("Dragon_33"); break;
+
+            case "Random"   :
+            case "Aléatoire":
+                GameObject BoutonsPersonnages = GameObject.Find("Personnages");
+                Button[] boutonsEnfants = BoutonsPersonnages.GetComponentsInChildren<Button>();
+                Button boutonAleatoire = boutonsEnfants[Random.Range(0, boutonsEnfants.Length)].GetComponent<Button>();
+                BoutonsPersonnages.GetComponent<GererBoutonsUI>().BoutonTrigger(boutonAleatoire);
+                break;
         }
 
-        ActualiserDragon();
+        EnleverDragons();
     }
 
-    void ActualiserDragon()
+    void ActiverDragons()
     {
-        //personnageJoueurActuel.transform.position = positionInitialePersonnages;
-        print(personnageJoueurActuel);
-        //print(personnageJoueurActuel.transform.position);
-
-
-        if (personnagesJoueur.Length > 0)
+        for (int i = 0; i < personnagesJoueur.Length; i++)
         {
-            foreach (GameObject personnageJoueur in personnagesJoueur)
-            {
-                personnageJoueur.SetActive(true);
-
-                if (!personnageJoueur == personnageJoueurActuel)
-                    personnageJoueur.SetActive(false);
-            }
+            personnagesJoueur[i].SetActive(true);
         }
 
-        else
-            return;
+        bodyMesh.materials[0].SetTexture("_MainTex", textureCorpsInitiale);
+    }
 
-        if (_animation != null)
-            AnimerDragon(_animation);
+    void EnleverDragons()
+    {
+        for (int i = 0; i < personnagesJoueur.Length; i++)
+        {
+            if (personnagesJoueur[i] == personnageJoueurActuel)
+            {
+                personnagesJoueur[i].transform.position = positionApercuPersonnages;
+                personnageJoueurActuel.GetComponent<Animation>().CrossFade(animationActuelle);
+                TexturerCorps(textureCorpsActuelle);
+            }
 
-        if (_textureCorps != null)
-            TexturerCorps(_textureCorps);
+            else
+            {
+                personnagesJoueur[i].transform.position = positionInitialePersonnage;
+                personnagesJoueur[i].SetActive(false);
+            }
+        }
     }
 
     public static void TrouverAssetsDragon()

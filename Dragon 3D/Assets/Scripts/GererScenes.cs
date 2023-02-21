@@ -175,7 +175,7 @@ public class GererScenes : MonoBehaviour
         if (Application.isEditor)
         {
             // Arrêter la scène de jouer
-            UnityEditor.EditorApplication.isPlaying = false;
+            //UnityEditor.EditorApplication.isPlaying = false;
         }
 
         // Sinon,
