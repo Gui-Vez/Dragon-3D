@@ -89,6 +89,12 @@ public class GererScenes : MonoBehaviour
 
     void AssignerTextes(string langage)
     {
+        /*
+         * Note pour moi-même :
+         * Pour gérer les textes, il serait préférable d'utiliser des enums plutôt que des listes.
+         * Ce serait à implémenter plus tard lorsque j'en aurais le temps pour m'y focaliser davantage.
+         */
+
         List<GameObject> boutonAnimationsListe = new List<GameObject>();
 
         for (int i = 0; i < boutonsAnimationsContenant.transform.childCount; i++)
