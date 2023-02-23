@@ -5,26 +5,37 @@ using UnityEngine;
 [RequireComponent(typeof(MeshFilter))]
 public class GenerationMesh : MonoBehaviour
 {
-
     Mesh mesh;
 
     Vector3[] vertices;
     int[] triangles;
+    //Vector2[] uvs;
+    Color[] couleurs;
+
+    public Gradient degrade;
+
+    private float hauteurTerrainMin;
+    private float hauteurTerrainMax;
 
     public int   xSize = 20;
     public int   zSize = 20;
-    public float ySize = 2f;
+    public float ySize = 5f;
 
-    private int prevXSize;
-    private int prevZSize;
+    private int   prevXSize;
+    private int   prevZSize;
     private float prevYSize;
 
-    bool dimensionsValides;
+    private int  xSizeMin = 1;
+    private int  xSizeMax = 100;
+    private int  zSizeMin = 1;
+    private int  zSizeMax = 100;
+    public float ySizeMin = -5f;
+    public float ySizeMax = 10f;
 
-    public bool activerSpheresGizmo = true;
-    private bool mettreAJourGizmo = true;
+    private bool dimensionsValides;
 
-
+    public  bool toggleMenuGizmo = false;
+    private bool activerSpheresGizmo = false;
 
     private static List<GameObject> gizmoSpheres = new List<GameObject>();
     private static int maxSphereCount;
@@ -44,32 +55,25 @@ public class GenerationMesh : MonoBehaviour
 
     void Update()
     {
-        if (xSize <= 0)
-            xSize = 1;
-
-        if (zSize <= 0)
-            zSize = 1;
-
-
         VerifierDimensions();
 
         if (!dimensionsValides)
             return;
 
 
+        if (toggleMenuGizmo)
+            activerSpheresGizmo = !activerSpheresGizmo;
+
         if (prevXSize != xSize || prevZSize != zSize || prevYSize != ySize)
         {
             CreateShape();
             UpdateMesh();
 
-            mettreAJourGizmo = true;
-
             prevXSize = xSize;
             prevZSize = zSize;
             prevYSize = ySize;
 
-            if (activerSpheresGizmo && !mettreAJourGizmo)
-                mettreAJourGizmo = true;
+            toggleMenuGizmo = true;
         }
     }
 
@@ -103,9 +107,16 @@ public class GenerationMesh : MonoBehaviour
                 }
 
                 vertices[i] = new Vector3(x, y, z);
+
+                if (y > hauteurTerrainMax)
+                    hauteurTerrainMax = y;
+                if (y < hauteurTerrainMin)
+                    hauteurTerrainMin = y;
+
                 i++;
             }
         }
+
 
         triangles = new int[xSize * zSize * 6];
 
@@ -129,6 +140,21 @@ public class GenerationMesh : MonoBehaviour
 
             vert++;
         }
+
+
+        //uvs = new Vector2[vertices.Length];
+        couleurs = new Color[vertices.Length];
+
+        for (int i = 0, z = 0; z <= zSize; z++)
+        {
+            for (int x = 0; x <= xSize; x++)
+            {
+                //uvs[i] = new Vector2((float)x / xSize, (float)z / zSize);
+                float hauteur = Mathf.InverseLerp(hauteurTerrainMin, hauteurTerrainMax, vertices[i].y);
+                couleurs[i] = degrade.Evaluate(hauteur);
+                i++;
+            }
+        }
     }
 
     void UpdateMesh()
@@ -137,6 +163,8 @@ public class GenerationMesh : MonoBehaviour
 
         mesh.vertices = vertices;
         mesh.triangles = triangles;
+        //mesh.uv = uvs;
+        mesh.colors = couleurs;
 
         mesh.RecalculateNormals();
 
@@ -158,7 +186,7 @@ public class GenerationMesh : MonoBehaviour
 
     void OnDrawGizmos()
     {
-        if (!mettreAJourGizmo)
+        if (!toggleMenuGizmo)
             return;
 
         else if (!activerSpheresGizmo)
@@ -169,8 +197,6 @@ public class GenerationMesh : MonoBehaviour
 
         else if (activerSpheresGizmo && vertices != null)
         {
-            print("Activer objets");
-
             // Check if we need to resize the sphere pool
             int sphereCount = vertices.Length;
 
@@ -201,20 +227,31 @@ public class GenerationMesh : MonoBehaviour
             }
         }
 
-        mettreAJourGizmo = false;
+        toggleMenuGizmo = false;
     }
 
 
     void VerifierDimensions()
     {
-        if (xSize <= 0 && zSize <= 0)
+        if (xSize < xSizeMin || zSize < zSizeMin || ySize < ySizeMin)
         {
-            Debug.LogWarning("La valeur de la dimension du mesh ne peut être moins que 0.");
+            Debug.LogWarning("La dimension du mesh est à sa valeur minimale.");
+            dimensionsValides = false;
+        }
 
+        else if (xSize > xSizeMax || zSize > zSizeMax || ySize > ySizeMax)
+        {
+            Debug.LogWarning("La dimension du mesh est à sa valeur maximale.");
             dimensionsValides = false;
         }
 
         else
+        {
             dimensionsValides = true;
+        }
+
+        xSize = Mathf.Clamp(xSize, xSizeMin, xSizeMax);
+        zSize = Mathf.Clamp(zSize, zSizeMin, zSizeMax);
+        ySize = Mathf.Clamp(ySize, ySizeMin, ySizeMax);
     }
 }

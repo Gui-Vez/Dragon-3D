@@ -301,6 +301,7 @@ GameObject:
   - component: {fileID: 93006864}
   - component: {fileID: 93006863}
   - component: {fileID: 93006862}
+  - component: {fileID: 93006865}
   m_Layer: 0
   m_Name: "Terrain Proc\xE9dural"
   m_TagString: Untagged
@@ -337,7 +338,39 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   xSize: 10
   zSize: 10
-  ySize: 2
+  ySize: 5
+  ySizeMin: -5
+  ySizeMax: 10
+  toggleMenuGizmo: 0
+  degrade:
+    serializedVersion: 2
+    key0: {r: 0.11524247, g: 0.7169812, b: 0.10416517, a: 1}
+    key1: {r: 0.4056604, g: 0.1807785, b: 0.08189747, a: 1}
+    key2: {r: 0.6320754, g: 0.3933237, b: 0.288608, a: 0}
+    key3: {r: 0.81370413, g: 0.7432148, b: 0.7122205, a: 0}
+    key4: {r: 1, g: 1, b: 1, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 16384
+    ctime2: 55705
+    ctime3: 62258
+    ctime4: 65535
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 5
+    m_NumAlphaKeys: 2
 --- !u!23 &93006863
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -358,7 +391,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6953a31c9175a1d4e882b5158074a6f6, type: 2}
+  - {fileID: -876546973899608171, guid: 0d2bf580a12c09741953e9f6525a9010, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -387,6 +420,20 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 93006860}
+  m_Mesh: {fileID: 0}
+--- !u!64 &93006865
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 93006860}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
   m_Mesh: {fileID: 0}
 --- !u!1 &95004807
 GameObject:
@@ -2791,7 +2838,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 95004808}
-  - {fileID: 1597232971}
   - {fileID: 748293192}
   - {fileID: 2014478274}
   m_Father: {fileID: 0}
@@ -3275,13 +3321,14 @@ GameObject:
   - component: {fileID: 1434576228}
   - component: {fileID: 1434576227}
   - component: {fileID: 1434576226}
+  - component: {fileID: 1434576229}
   m_Layer: 0
   m_Name: "Vagues Proc\xE9durales"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1434576225
 Transform:
   m_ObjectHideFlags: 0
@@ -3312,6 +3359,38 @@ MonoBehaviour:
   xSize: 10
   zSize: 10
   ySize: 2
+  ySizeMin: -5
+  ySizeMax: 10
+  toggleMenuGizmo: 0
+  degrade:
+    serializedVersion: 2
+    key0: {r: 1, g: 1, b: 1, a: 1}
+    key1: {r: 1, g: 1, b: 1, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
 --- !u!23 &1434576227
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3361,6 +3440,20 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1434576224}
+  m_Mesh: {fileID: 0}
+--- !u!64 &1434576229
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1434576224}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
   m_Mesh: {fileID: 0}
 --- !u!1 &1515080088
 GameObject:
@@ -3745,13 +3838,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1597232970}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 93006861}
   - {fileID: 1434576225}
-  m_Father: {fileID: 1222805745}
+  m_Father: {fileID: 1673706895}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1616656641
@@ -4080,6 +4173,7 @@ Transform:
   m_Children:
   - {fileID: 1297985431}
   - {fileID: 486068544}
+  - {fileID: 1597232971}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
