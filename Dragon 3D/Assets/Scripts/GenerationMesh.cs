@@ -7,7 +7,7 @@ public class GenerationMesh : MonoBehaviour
 {
     Mesh mesh;
 
-    Vector3[] vertices;
+    Vector3[] sommets;
     int[] triangles;
     //Vector2[] uvs;
     Color[] couleurs;
@@ -17,241 +17,319 @@ public class GenerationMesh : MonoBehaviour
     private float hauteurTerrainMin;
     private float hauteurTerrainMax;
 
-    public int   xSize = 20;
-    public int   zSize = 20;
-    public float ySize = 5f;
+    public int   tailleX = 20;
+    public int   tailleZ = 20;
+    public float tailleY = 5f;
 
-    private int   prevXSize;
-    private int   prevZSize;
-    private float prevYSize;
+    private int   tailleXPrecedente;
+    private int   tailleZPrecedente;
+    private float tailleYPrecedente;
 
-    private int  xSizeMin = 1;
-    private int  xSizeMax = 100;
-    private int  zSizeMin = 1;
-    private int  zSizeMax = 100;
-    public float ySizeMin = -5f;
-    public float ySizeMax = 10f;
+    private int  tailleXMin = 1;
+    private int  tailleXMax = 100;
+    private int  tailleZMin = 1;
+    private int  tailleZMax = 100;
+    public float tailleYMin = -5f;
+    public float tailleYMax = 10f;
+
+    public float bruit = 0.2f;
 
     private bool dimensionsValides;
 
-    public  bool toggleMenuGizmo = false;
+    public  bool basculerMenuGizmo = false;
     private bool activerSpheresGizmo = false;
 
-    private static List<GameObject> gizmoSpheres = new List<GameObject>();
-    private static int maxSphereCount;
+    private static List<GameObject> spheresGizmo = new List<GameObject>();
+    private static int maxNombreSpheres;
 
     void Start()
     {
+        // Créer un nouveau mesh
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
 
-        CreateShape();
-        UpdateMesh();
+        // Appeler les méthodes pour la création du mesh
+        CreerMesh();
+        MettreAJourMesh();
 
-        prevXSize = xSize;
-        prevZSize = zSize;
-        prevYSize = ySize;
+        // Actualiser la taille précédente du mesh
+        tailleXPrecedente = tailleX;
+        tailleZPrecedente = tailleZ;
+        tailleYPrecedente = tailleY;
     }
 
     void Update()
     {
+        // Vérifier si les dimensions du mesh fonctionnent
         VerifierDimensions();
 
+        // Si elles ne le sont pas, annuler les prochaines commandes
         if (!dimensionsValides)
             return;
 
 
-        if (toggleMenuGizmo)
+        // Si l'on active le menu Gizmo, activer les spheres
+        if (basculerMenuGizmo)
             activerSpheresGizmo = !activerSpheresGizmo;
 
-        if (prevXSize != xSize || prevZSize != zSize || prevYSize != ySize)
+        // Si la taille du mesh n'est pas à jour,
+        if (tailleXPrecedente != tailleX || tailleZPrecedente != tailleZ || tailleYPrecedente != tailleY)
         {
-            CreateShape();
-            UpdateMesh();
+            // Appeler les méthodes pour mettre à jour le mesh
+            CreerMesh();
+            MettreAJourMesh();
 
-            prevXSize = xSize;
-            prevZSize = zSize;
-            prevYSize = ySize;
+            // Assigner les variables de taille pour les mettre à jour
+            tailleXPrecedente = tailleX;
+            tailleZPrecedente = tailleZ;
+            tailleYPrecedente = tailleY;
 
-            toggleMenuGizmo = true;
+            // Activer le menu Gizmo
+            basculerMenuGizmo = true;
         }
     }
 
-    void CreateShape()
+    void VerifierDimensions()
     {
-        vertices = new Vector3[(xSize + 1) * (zSize + 1)];
-
-        for (int i = 0, z = 0; z <= zSize; z++)
+        // Si la taille désirée est inférieure à la valeur minimale,
+        if (tailleX < tailleXMin || tailleZ < tailleZMin || tailleY < tailleYMin)
         {
-            for (int x = 0; x <= xSize; x++)
+            // Rendre les dimensions invalides
+            //Debug.LogWarning("La dimension du mesh est à sa valeur minimale.");
+            dimensionsValides = false;
+        }
+
+        // Si la taille désirée est suppérieure à la valeur maximale,
+        else if (tailleX > tailleXMax || tailleZ > tailleZMax || tailleY > tailleYMax)
+        {
+            // Rendre les dimensions invalides
+            //Debug.LogWarning("La dimension du mesh est à sa valeur maximale.");
+            dimensionsValides = false;
+        }
+
+        // Sinon, rendre les dimensions valides
+        else
+            dimensionsValides = true;
+
+        // Écrêter la taille du mesh entre les valeurs minimales et maximales
+        tailleX = Mathf.Clamp(tailleX, tailleXMin, tailleXMax);
+        tailleZ = Mathf.Clamp(tailleZ, tailleZMin, tailleZMax);
+        tailleY = Mathf.Clamp(tailleY, tailleYMin, tailleYMax);
+    }
+
+    void CreerMesh()
+    {
+        // Contenir les sommet du mesh selon le nombre de tuiles
+        sommets = new Vector3[(tailleX + 1) * (tailleZ + 1)];
+
+        // Pour tous les points sur l'axe Z du mesh,
+        for (int i = 0, z = 0; z <= tailleZ; z++)
+        {
+            // Pour tous les points sur l'axe X du mesh,
+            for (int x = 0; x <= tailleX; x++)
             {
+                // Initialiser un point sur l'axe Y
                 float y = 0f;
 
+                // Selon le nom de l'objet scripté,
                 switch (name)
                 {
                     case "Terrain Procédural":
-                        y = Mathf.PerlinNoise(x * 0.3f, z * 0.3f) * ySize;
+
+                        // Assigner la valeur Y à une valeur aléatoire à l'aide du générateur de bruit de Perlin
+                        y = Mathf.PerlinNoise(x * bruit, z * bruit) * tailleY;
+
+                        // Ajouter une valeur aléatoire (afin de rendre les pointes du terrain plus naturelles)
+                        y += Random.Range(-0.5f, 0.5f);
+
+                        // Si le sommet se situe sur un coin ou sur le côté de la surface du mesh,
+                        if ((x == 0 && z == 0) || (x == tailleX && z == 0) || (x == 0 && z == tailleZ) || (x == tailleX && z == tailleZ)
+                           || (x == 0 && z > 0 && z < tailleZ) || (x == tailleX && z > 0 && z < tailleZ)
+                           || (z == 0 && x > 0 && x < tailleX) || (z == tailleZ && x > 0 && x < tailleX))
+                            // Nullifier la valeur Y
+                            y = 0f;
+
                         break;
 
                     case "Vagues Procédurales":
-                        y = Mathf.Sin((x * 0.5f) + (z * 0.5f)) * ySize;
+
+                        // Assigner la valeur Y à une valeur aléatoire à l'aide d'un générateur sinusoïdale
+                        y = Mathf.Sin((x * 0.5f) + (z * 0.5f)) * tailleY;
+
                         break;
                 }
 
-                // check if vertex is on a corner or edge of the plane
-                if   ((x == 0 && z == 0) || (x == xSize && z == 0) || (x == 0 && z == zSize) || (x == xSize && z == zSize)
-                   || (x == 0 && z > 0 && z < zSize) || (x == xSize && z > 0 && z < zSize)
-                   || (z == 0 && x > 0 && x < xSize) || (z == zSize && x > 0 && x < xSize))
-                {
-                    y = 0f;
-                }
+                // Assigner les valeurs de position à chaque sommet
+                sommets[i] = new Vector3(x, y, z);
 
-                vertices[i] = new Vector3(x, y, z);
 
+                // Si la valeur Y est suppérieure à la valeur maximale du terrain,
                 if (y > hauteurTerrainMax)
+                    // Concaténer la valeur maximale du terrain par la valeur Y
                     hauteurTerrainMax = y;
+
+                // Si la valeur Y est inférieure à la valeur minimale du terrain,
                 if (y < hauteurTerrainMin)
+                    // Concaténer la valeur minimale du terrain par la valeur Y
                     hauteurTerrainMin = y;
 
+                // Incrémenter l'index de la boucle
                 i++;
             }
         }
 
+        // Contenir les triangles du mesh selon le nombre de tuiles
+        triangles = new int[tailleX * tailleZ * 6];
 
-        triangles = new int[xSize * zSize * 6];
-
-        int vert = 0;
+        // Initialiser les vertex et les tris
+        int vertex = 0;
         int tris = 0;
 
-        for (int z = 0; z < zSize; z++)
+        // Pour tous les points sur l'axe Z du mesh,
+        for (int z = 0; z < tailleZ; z++)
         {
-            for (int x = 0; x < xSize; x++)
+            // Pour tous les points sur l'axe X du mesh,
+            for (int x = 0; x < tailleX; x++)
             {
-                triangles[tris + 0] = vert + 0;
-                triangles[tris + 1] = vert + xSize + 1;
-                triangles[tris + 2] = vert + 1;
-                triangles[tris + 3] = vert + 1;
-                triangles[tris + 4] = vert + xSize + 1;
-                triangles[tris + 5] = vert + xSize + 2;
+                // Assigner la face des triangle selon la position de six vertex
+                triangles[tris + 0] = vertex + 0;
+                triangles[tris + 1] = vertex + tailleX + 1;
+                triangles[tris + 2] = vertex + 1;
+                triangles[tris + 3] = vertex + 1;
+                triangles[tris + 4] = vertex + tailleX + 1;
+                triangles[tris + 5] = vertex + tailleX + 2;
 
-                vert++;
+                // Incrémenter le nombre de vertex sur l'axe X
+                vertex++;
+
+                // Incrémenter le nombre de tris par 6 (pour chaque vertex de deux triangles juxtaposés)
                 tris += 6;
             }
 
-            vert++;
+            // Incrémenter le nombre de vertex sur l'axe Z
+            vertex++;
         }
 
 
-        //uvs = new Vector2[vertices.Length];
-        couleurs = new Color[vertices.Length];
+        // Contenir les UVs du mesh selon le nombre de sommets
+        //uvs = new Vector2[sommets.Length];
 
-        for (int i = 0, z = 0; z <= zSize; z++)
+        // Contenir les couleurs selon le nombre de sommets
+        couleurs = new Color[sommets.Length];
+
+        // Pour tous les points sur l'axe Z du mesh,
+        for (int i = 0, z = 0; z <= tailleZ; z++)
         {
-            for (int x = 0; x <= xSize; x++)
+            // Pour tous les points sur l'axe X du mesh,
+            for (int x = 0; x <= tailleX; x++)
             {
-                //uvs[i] = new Vector2((float)x / xSize, (float)z / zSize);
-                float hauteur = Mathf.InverseLerp(hauteurTerrainMin, hauteurTerrainMax, vertices[i].y);
+                // Assigner les UVs en fonction de la dimension du mesh
+                //uvs[i] = new Vector2((float)x / tailleX, (float)z / tailleZ);
+
+                // Assigner la hauteur du mesh en inversant la fonction qui permet d'obtenir la hauteur de tous les sommets
+                float hauteur = Mathf.InverseLerp(hauteurTerrainMin, hauteurTerrainMax, sommets[i].y);
+
+                // Assigner la couleur du dégradé en fonction de la hauteur du mesh
                 couleurs[i] = degrade.Evaluate(hauteur);
+
+                // Incrémenter l'index de la boucle
                 i++;
             }
         }
     }
 
-    void UpdateMesh()
+    void MettreAJourMesh()
     {
+        // Retirer le mesh déjà existant
         mesh.Clear();
 
-        mesh.vertices = vertices;
+        // Assigner les sommets, triangles, UVs et couleurs du mesh
+        mesh.vertices = sommets;
         mesh.triangles = triangles;
         //mesh.uv = uvs;
         mesh.colors = couleurs;
 
+        // Recalculer l'éclairage et le shading de la surface du mesh
         mesh.RecalculateNormals();
-
+        // Recalculer la boîte englobante du mesh (afin de faire du "culling" en enlevant la partie inférieure pour sauver des ressources)
         mesh.RecalculateBounds();
+
+        // Créer la collision du mesh et l'appliquer
         MeshCollider meshCollider = gameObject.GetComponent<MeshCollider>();
         meshCollider.sharedMesh = mesh;
     }
 
-    void OnDestroy()
-    {
-        foreach (var sphere in gizmoSpheres)
-        {
-            if (sphere != null)
-            {
-                Destroy(sphere);
-            }
-        }
-    }
-
     void OnDrawGizmos()
     {
-        if (!toggleMenuGizmo)
+        // Si le menu Gizmo n'est pas actif, annuler le reste des commandes
+        if (!basculerMenuGizmo)
             return;
 
+        // Sinon, si l'on ne peut activer les spheres Gizmo,
         else if (!activerSpheresGizmo)
         {
-            foreach (GameObject sphere in gizmoSpheres)
+            // Pour chaque sphere Gizmo,
+            foreach (GameObject sphere in spheresGizmo)
+                // Désactiver la sphère
                 sphere.SetActive(false);
         }
 
-        else if (activerSpheresGizmo && vertices != null)
+        // Sinon, si l'on peut activer les spheres Gizmo et qu'il y a des sommets,
+        else if (activerSpheresGizmo && sommets != null)
         {
-            // Check if we need to resize the sphere pool
-            int sphereCount = vertices.Length;
+            // Stocker le nombre de spheres
+            int nombreSpheres = sommets.Length;
 
-            if (maxSphereCount < sphereCount)
+            // Si le nombre de sphères est suppérieure à sa valeur maximale,
+            if (nombreSpheres > maxNombreSpheres)
             {
-                for (int i = maxSphereCount; i < sphereCount; i++)
+                // Réitérer pour chaque sphère du nombre de sphères les commandes suivantes
+                for (int i = maxNombreSpheres; i < nombreSpheres; i++)
                 {
+                    // Créer un objet sphère
                     GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+
+                    // Assigner la position de la sphère
                     sphere.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+
+                    // Assigner la couleur rouge au rendu du mesh de la sphère
                     sphere.GetComponent<MeshRenderer>().material.color = Color.red;
-                    gizmoSpheres.Add(sphere);
+
+                    // Ajouter la sphère à la liste
+                    spheresGizmo.Add(sphere);
                 }
 
-                maxSphereCount = sphereCount;
+                // Concaténer le nombre maximal de sphères par son nombre actuel
+                maxNombreSpheres = nombreSpheres;
             }
 
-            // Set the position of each sphere
-            for (int i = 0; i < sphereCount; i++)
+            // Réitérer pour chaque sphère utilisée les commandes suivantes
+            for (int i = 0; i < nombreSpheres; i++)
             {
-                gizmoSpheres[i].transform.position = vertices[i];
-                gizmoSpheres[i].SetActive(true);
+                // Assigner la position de la sphère au sommet respectif du mesh
+                spheresGizmo[i].transform.position = sommets[i];
+
+                // Activer la sphère
+                spheresGizmo[i].SetActive(true);
             }
 
-            // Disable unused spheres
-            for (int i = sphereCount; i < maxSphereCount; i++)
-            {
-                gizmoSpheres[i].SetActive(false);
-            }
+            // Réitérer pour chaque sphère inutilisée les commandes suivantes
+            for (int i = nombreSpheres; i < maxNombreSpheres; i++)
+                // Désactiver la sphère
+                spheresGizmo[i].SetActive(false);
         }
 
-        toggleMenuGizmo = false;
+        // Désactiver le menu Gizmo
+        basculerMenuGizmo = false;
     }
 
-
-    void VerifierDimensions()
+    void OnDestroy()
     {
-        if (xSize < xSizeMin || zSize < zSizeMin || ySize < ySizeMin)
-        {
-            Debug.LogWarning("La dimension du mesh est à sa valeur minimale.");
-            dimensionsValides = false;
-        }
-
-        else if (xSize > xSizeMax || zSize > zSizeMax || ySize > ySizeMax)
-        {
-            Debug.LogWarning("La dimension du mesh est à sa valeur maximale.");
-            dimensionsValides = false;
-        }
-
-        else
-        {
-            dimensionsValides = true;
-        }
-
-        xSize = Mathf.Clamp(xSize, xSizeMin, xSizeMax);
-        zSize = Mathf.Clamp(zSize, zSizeMin, zSizeMax);
-        ySize = Mathf.Clamp(ySize, ySizeMin, ySizeMax);
+        // Pour chaque sphère Gizmo,
+        foreach (var sphere in spheresGizmo)
+            // S'il y a une sphère,
+            if (sphere != null)
+                // Détruire celle-ci
+                Destroy(sphere);
     }
 }
