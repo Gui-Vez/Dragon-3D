@@ -34,6 +34,10 @@ public class GenerationMesh : MonoBehaviour
 
     public float bruit = 0.2f;
 
+    public float hauteurVaguesMin = 0.25f;
+    public float hauteurVaguesMax = 0.75f;
+    private float delaiVagues = 0.5f;
+
     private bool dimensionsValides;
 
     public  bool basculerMenuGizmo = false;
@@ -68,6 +72,12 @@ public class GenerationMesh : MonoBehaviour
             return;
 
 
+        // Si l'objet scripté est une terrain de vagues procédurales,
+        if (gameObject.name == "Vagues Procédurales")
+            // Bouger les vagues
+            BougerVagues();
+
+
         // Si l'on active le menu Gizmo, activer les spheres
         if (basculerMenuGizmo)
             activerSpheresGizmo = !activerSpheresGizmo;
@@ -85,7 +95,7 @@ public class GenerationMesh : MonoBehaviour
             tailleYPrecedente = tailleY;
 
             // Activer le menu Gizmo
-            basculerMenuGizmo = true;
+            //basculerMenuGizmo = true;
         }
     }
 
@@ -132,7 +142,7 @@ public class GenerationMesh : MonoBehaviour
                 float y = 0f;
 
                 // Selon le nom de l'objet scripté,
-                switch (name)
+                switch (gameObject.name)
                 {
                     case "Terrain Procédural":
 
@@ -154,7 +164,10 @@ public class GenerationMesh : MonoBehaviour
                     case "Vagues Procédurales":
 
                         // Assigner la valeur Y à une valeur aléatoire à l'aide d'un générateur sinusoïdale
-                        y = Mathf.Sin((x * 0.5f) + (z * 0.5f)) * tailleY;
+                        y = Mathf.Sin((x * hauteurVaguesMin) + (z * hauteurVaguesMax)) * tailleY;
+
+                        // Assigner la valeur Y à une valeur aléatoire à l'aide d'un générateur de bruit de Perlin
+                        //y = Mathf.PerlinNoise(x * bruit, z * bruit) * tailleY - tailleY / 2f;
 
                         break;
                 }
@@ -236,6 +249,26 @@ public class GenerationMesh : MonoBehaviour
                 i++;
             }
         }
+    }
+
+    void BougerVagues()
+    {
+        /*
+        // Calculer le temps écoulé depuis le début du jeu
+        float time = Time.time;
+
+        // Initialiser la valeur Y
+        float y;
+
+        // Calculer la valeur Y en fonction du temps écoulé
+        y = Mathf.Sin(time) * hauteurVaguesMin + delaiVagues;
+
+        // Mapper la valeur Y à l'intervalle des deux pôles
+        y = Mathf.Lerp(hauteurVaguesMin, hauteurVaguesMax, y);
+
+        // Assigner la valeur Y à la variable tailleY de l'objet
+        GetComponent<GenerationMesh>().tailleY = y;
+        */
     }
 
     void MettreAJourMesh()
