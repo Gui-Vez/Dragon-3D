@@ -9,7 +9,7 @@ public class GenerationMesh : MonoBehaviour
 
     Vector3[] sommets;
     int[] triangles;
-    //Vector2[] uvs;
+    Vector2[] uvs;
     Color[] couleurs;
 
     public Gradient degrade;
@@ -36,7 +36,7 @@ public class GenerationMesh : MonoBehaviour
 
     public float hauteurVaguesMin = 0.25f;
     public float hauteurVaguesMax = 0.75f;
-    private float delaiVagues = 0.5f;
+    //private float delaiVagues = 0.5f;
 
     private bool dimensionsValides;
 
@@ -144,7 +144,7 @@ public class GenerationMesh : MonoBehaviour
                 // Selon le nom de l'objet scripté,
                 switch (gameObject.name)
                 {
-                    case "Terrain Procédural":
+                    case "Montagne Procédurale":
 
                         // Assigner la valeur Y à une valeur aléatoire à l'aide du générateur de bruit de Perlin
                         y = Mathf.PerlinNoise(x * bruit, z * bruit) * tailleY;
@@ -154,8 +154,8 @@ public class GenerationMesh : MonoBehaviour
 
                         // Si le sommet se situe sur un coin ou sur le côté de la surface du mesh,
                         if ((x == 0 && z == 0) || (x == tailleX && z == 0) || (x == 0 && z == tailleZ) || (x == tailleX && z == tailleZ)
-                           || (x == 0 && z > 0 && z < tailleZ) || (x == tailleX && z > 0 && z < tailleZ)
-                           || (z == 0 && x > 0 && x < tailleX) || (z == tailleZ && x > 0 && x < tailleX))
+                         || (x == 0 && z > 0 && z < tailleZ) || (x == tailleX && z > 0 && z < tailleZ)
+                         || (z == 0 && x > 0 && x < tailleX) || (z == tailleZ && x > 0 && x < tailleX))
                             // Nullifier la valeur Y
                             y = 0f;
 
@@ -225,7 +225,7 @@ public class GenerationMesh : MonoBehaviour
 
 
         // Contenir les UVs du mesh selon le nombre de sommets
-        //uvs = new Vector2[sommets.Length];
+        uvs = new Vector2[sommets.Length];
 
         // Contenir les couleurs selon le nombre de sommets
         couleurs = new Color[sommets.Length];
@@ -237,7 +237,7 @@ public class GenerationMesh : MonoBehaviour
             for (int x = 0; x <= tailleX; x++)
             {
                 // Assigner les UVs en fonction de la dimension du mesh
-                //uvs[i] = new Vector2((float)x / tailleX, (float)z / tailleZ);
+                uvs[i] = new Vector2((float)x / tailleX, (float)z / tailleZ);
 
                 // Assigner la hauteur du mesh en inversant la fonction qui permet d'obtenir la hauteur de tous les sommets
                 float hauteur = Mathf.InverseLerp(hauteurTerrainMin, hauteurTerrainMax, sommets[i].y);
@@ -279,7 +279,7 @@ public class GenerationMesh : MonoBehaviour
         // Assigner les sommets, triangles, UVs et couleurs du mesh
         mesh.vertices = sommets;
         mesh.triangles = triangles;
-        //mesh.uv = uvs;
+        mesh.uv = uvs;
         mesh.colors = couleurs;
 
         // Recalculer l'éclairage et le shading de la surface du mesh

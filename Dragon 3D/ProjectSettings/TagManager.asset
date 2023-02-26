@@ -3,7 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Mur
+  - Effect
+  - Dragon
+  - Mouette
+  - Nuage
+  - Terrain
   layers:
   - Default
   - TransparentFX
