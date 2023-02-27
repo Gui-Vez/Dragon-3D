@@ -2,11 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DeplacementMouette : MonoBehaviour
+public class DeplacementFruit : MonoBehaviour
 {
     public Transform positionCible;
+
+    public float vitesseDeplacement = 10f;
     
-    public float vitesseDeplacement = 5f;
+    void Start()
+    {
+        // Générer une vitesse de déplacement aléatoire
+        //vitesseDeplacement = Random.Range(vitesseDeplacement / 2, vitesseDeplacement * 2);
+    }
 
     void Update()
     {
