@@ -49,21 +49,25 @@ public class GererCollisions : MonoBehaviour
                     // Rendre la position du clône de façon aléatoire
                     RandomiserPositionClone();
 
-                    InstancierObjet();
+                    // Créer le délai de l'activation de la coroutine
+                    float delai = 0f;
+
+                    // Démarrer la coroutine qui instancie le clône
+                    StartCoroutine("InstancierObjet", delai);
                 }
                 break;
 
             case "Nuage":
                 if (trigger.name == "Trigger Nuages")
                 {
-                    // Do something
+
                 }
                 break;
 
             case "Terrain":
                 if (trigger.name == "Trigger Terrain")
                 {
-                    // Do something
+
                 }
                 break;
 
@@ -73,7 +77,12 @@ public class GererCollisions : MonoBehaviour
                     // Rendre la position du clône de façon aléatoire
                     RandomiserPositionClone();
 
-                    InstancierObjet();
+                    // Créer le délai de l'activation de la coroutine
+                    float delai = Random.Range(1f, 1f * GenerationObjet.fruitsObtenus);
+                    delai = Mathf.Clamp(delai, 1f, 10f);
+
+                    // Démarrer la coroutine qui instancie le clône
+                    StartCoroutine("InstancierObjet", delai);
                 }
                 break;
 
@@ -81,16 +90,23 @@ public class GererCollisions : MonoBehaviour
                 break;
         }
 
+        // Si le joueur / le dragon
         if (gameObject.CompareTag("Player") || gameObject.CompareTag("Dragon"))
         {
+            // interragit avec
             switch (trigger.tag)
             {
+                // Une mouette,
                 case "Mouette":
                     break;
 
+                // Un fruit,
                 case "Fruit":
-                    print("fruit obtenu");
-                    GenerationObjet.IncrementerNombreMouettes(1);
+                    GenerationObjet.IncrementerNombreFruits();
+
+                    int fruitScore = GererScore.pointagesFruits[trigger.gameObject.name];
+                    GererScore.scoreActuel += fruitScore;
+
                     break;
 
                 default:
@@ -105,13 +121,12 @@ public class GererCollisions : MonoBehaviour
         positionAleatoire = new Vector3(Random.Range(positionEntree.position.x - largeurBoite / 2f, positionEntree.position.x + largeurBoite / 2f),
                                         Random.Range(positionEntree.position.y - hauteurBoite / 2f, positionEntree.position.y + hauteurBoite / 2f),
                                         Random.Range(positionEntree.position.z - profondeurBoite / 2f, positionEntree.position.z + profondeurBoite / 2f));
-
-        // Positionner l'objet à l'entrée
-        objetACloner.transform.position = positionAleatoire;
     }
 
-    void InstancierObjet()
+    IEnumerator InstancierObjet(float delai)
     {
+        yield return new WaitForSeconds(delai);
+
         // Instancier un objet
         GameObject instanceObjet = Instantiate(objetACloner, positionAleatoire, Quaternion.identity, objetACloner.transform.parent);
 
@@ -129,10 +144,15 @@ public class GererCollisions : MonoBehaviour
             case "Fruit":
                 // Faire regarder le clône selon la rotation du modèle initial
                 instanceObjet.transform.rotation = objetACloner.transform.rotation;
+
+                GenerationObjet.ActiverFruit();
+
                 break;
         }
 
         // Détruire l'objet à clôner
         Destroy(objetACloner);
+
+        yield return null;
     }
 }

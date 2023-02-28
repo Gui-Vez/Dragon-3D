@@ -7,11 +7,22 @@ public class DeplacementFruit : MonoBehaviour
     public Transform positionCible;
 
     public float vitesseDeplacement = 10f;
-    
+    public float vitesseRotation = 100f;
+    //public float amplitudeSinus = 0.1f;
+    //public float frequenceSinus = 3f;
+    //private float tempsDepartSinus;
+    //private float initialY;
+
     void Start()
     {
         // Générer une vitesse de déplacement aléatoire
         //vitesseDeplacement = Random.Range(vitesseDeplacement / 2, vitesseDeplacement * 2);
+
+        // Démarrer le temps à accorder à la translation sinusoïdale
+        //tempsDepartSinus = Time.time;
+
+        // Sauvegarder la position en y initiale
+        //initialY = transform.localPosition.y;
     }
 
     void Update()
@@ -35,5 +46,13 @@ public class DeplacementFruit : MonoBehaviour
 
         // Bouger vers la cible
         transform.position += mouvement;
+
+        // Calculer l'angle de rotation du fruit
+        float angleRotation = vitesseRotation * Time.deltaTime;
+        transform.Rotate(Vector3.forward, angleRotation);
+
+        // Calculer la position en y en utilisant une fonction sinusoidale
+        //float y = initialY + Mathf.Sin((Time.time - tempsDepartSinus) * frequenceSinus) * amplitudeSinus;
+        //transform.localPosition = new Vector3(transform.localPosition.x, y, transform.localPosition.z);
     }
 }

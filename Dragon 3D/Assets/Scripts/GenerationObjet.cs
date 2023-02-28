@@ -4,17 +4,22 @@ using UnityEngine;
 
 public class GenerationObjet : MonoBehaviour
 {
-    private List<GameObject> listeMouettes = new List<GameObject>();
+    public static List<GameObject> listeMouettes = new List<GameObject>();
     private GameObject[] mouettes;
-    public int nombreMouettesActives = 1;
+    private int nombreMouettesActives = 0;
     private int nombreMouettesPrecedent;
 
-    private List<GameObject> listeFruits = new List<GameObject>();
+    public static List<GameObject> listeFruits = new List<GameObject>();
     private GameObject[] fruits;
-    public int nombreFruitsActifs = 1;
+    private int nombreFruitsActifs = 0;
     private int nombreFruitsPrecedent;
-    
 
+    public static int fruitsObtenus = 0;
+    public int fruitsParMouettes = 2;
+    public int nombreFruitsRequisInitial = 1;
+
+    public float delaiActivationMouettes = 0.5f;
+    public float delaiActivationFruits = 1f;
 
     void Start()
     {
@@ -33,22 +38,24 @@ public class GenerationObjet : MonoBehaviour
                     mouette.transform.parent.gameObject.SetActive(false);
                 }
 
-                ActiverMouettes();
+                Invoke("ActiverMouettes", delaiActivationMouettes);
 
                 break;
 
             case "Fruits":
 
+                nombreFruitsPrecedent = nombreFruitsActifs;
+
                 fruits = GameObject.FindGameObjectsWithTag("Fruit");
 
                 foreach (GameObject fruit in fruits)
                 {
-                    listeMouettes.Add(fruit.transform.parent.gameObject);
+                    listeFruits.Add(fruit.transform.parent.gameObject);
 
                     fruit.transform.parent.gameObject.SetActive(false);
                 }
 
-                ActiverFruits();
+                Invoke("ActiverFruit", delaiActivationFruits);
 
                 break;
         }
@@ -61,22 +68,14 @@ public class GenerationObjet : MonoBehaviour
             case "Mouettes":
 
                 if (nombreMouettesPrecedent != nombreMouettesActives)
-                {
-                    IncrementerNombreMouettes(nombreMouettesActives - nombreMouettesPrecedent);
-
                     nombreMouettesPrecedent = nombreMouettesActives;
-                }
 
                 break;
 
             case "Fruits":
 
                 if (nombreFruitsPrecedent != nombreFruitsActifs)
-                {
-                    IncrementerNombreMouettes(nombreFruitsActifs - nombreFruitsPrecedent);
-
                     nombreFruitsPrecedent = nombreFruitsActifs;
-                }
 
                 break;
         }
@@ -92,20 +91,18 @@ public class GenerationObjet : MonoBehaviour
         if (nombreMouettesActives < 0)
             nombreMouettesActives = 0;
 
-        ActiverMouettes();
+        Invoke("ActiverMouettes", delaiActivationMouettes);
     }
 
-    public void IncrementerNombreFruits(int nombreIncrementationFruits)
+    public void IncrementerNombreFruits()
     {
-        nombreFruitsActifs += nombreIncrementationFruits;
+        fruitsObtenus++;
 
-        if (nombreFruitsActifs > listeFruits.Count)
-            nombreFruitsActifs = listeFruits.Count;
-
-        if (nombreFruitsActifs < 0)
-            nombreFruitsActifs = 0;
-
-        ActiverFruits();
+        // Check if the number of fruits collected is divisible by the specified value
+        if (fruitsObtenus % fruitsParMouettes - nombreFruitsRequisInitial == 0)
+        {
+            IncrementerNombreMouettes(1);
+        }
     }
 
     void ActiverMouettes()
@@ -117,12 +114,13 @@ public class GenerationObjet : MonoBehaviour
             listeMouettes[i].SetActive(false);
     }
 
-    void ActiverFruits()
+    public void ActiverFruit()
     {
-        for (int i = 0; i < nombreFruitsActifs; i++)
-            listeFruits[i].SetActive(true);
-
         for (int i = listeFruits.Count - 1; i >= nombreFruitsActifs; i--)
             listeFruits[i].SetActive(false);
+
+        int indexFruit = Random.Range(0, listeFruits.Count);
+
+        listeFruits[indexFruit].SetActive(true);
     }
 }
