@@ -14,6 +14,11 @@ public class GenerationObjet : MonoBehaviour
     private int nombreFruitsActifs = 0;
     private int nombreFruitsPrecedent;
 
+    public static List<GameObject> listeNuages = new List<GameObject>();
+    private GameObject[] nuages;
+    private int nombreNuagesActifs = 0;
+    private int nombreNuagesPrecedent;
+
     public static int fruitsObtenus = 0;
     public int fruitsParMouettes = 2;
     public int nombreFruitsRequisInitial = 1;
@@ -56,6 +61,21 @@ public class GenerationObjet : MonoBehaviour
                 }
 
                 Invoke("ActiverFruit", delaiActivationFruits);
+
+                break;
+
+            case "Nuages":
+
+                nombreFruitsPrecedent = nombreNuagesActifs;
+
+                nuages = GameObject.FindGameObjectsWithTag("Nuage");
+
+                foreach (GameObject nuage in nuages)
+                {
+                    listeNuages.Add(nuage.transform.parent.gameObject);
+                }
+
+                ActiverNuages();
 
                 break;
         }
@@ -122,5 +142,15 @@ public class GenerationObjet : MonoBehaviour
         int indexFruit = Random.Range(0, listeFruits.Count);
 
         listeFruits[indexFruit].SetActive(true);
+    }
+
+    void ActiverNuages()
+    {
+        for (int i = listeNuages.Count - 1; i >= nombreNuagesActifs; i--)
+            listeNuages[i].SetActive(false);
+
+        int indexNuage = Random.Range(0, listeNuages.Count);
+
+        listeNuages[indexNuage].SetActive(true);
     }
 }
