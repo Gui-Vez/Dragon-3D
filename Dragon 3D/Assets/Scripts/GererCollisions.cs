@@ -30,7 +30,12 @@ public class GererCollisions : MonoBehaviour
 
     private bool estTouche  = false;
     private bool clignote   = false;
-    private bool peutBouger = true;
+
+    public float delaiClignotement = 0.05f;
+    public int nombreClignotements = 10;
+    public float vitesseClignotement = 0.1f;
+
+    private GameObject dragonJoueur;
 
     void Start()
     {
@@ -70,6 +75,24 @@ public class GererCollisions : MonoBehaviour
             default:
                 break;
         }
+
+        if (gameObject.name == "Collision Mouettes")
+        {
+            dragonJoueur = GameObject.FindGameObjectWithTag("Dragon");
+
+            if (dragonJoueur == null)
+                dragonJoueur = GameObject.FindGameObjectWithTag("Player");
+        }
+    }
+
+    void Update()
+    {
+        // S'il y a un objet contenant le dragon,
+        if (dragonJoueur != null)
+            // Si l'objet contenant le script s'agit de la collision des mouettes,
+            if (gameObject.name == "Collision Mouettes")
+                // Modifier la position de cet élément pour correspondre à celui du dragon
+                transform.position = dragonJoueur.transform.position;
     }
 
     void OnTriggerEnter(Collider trigger)
@@ -79,16 +102,28 @@ public class GererCollisions : MonoBehaviour
         {
             // S'il s'agit d'une mouette;
             case "Mouette":
+                // Si l'interraction se fait avec le mur qui fait téléporter la mouette,
                 if (trigger.name == "Trigger Mouettes")
+                    // Appeler la méthode qui clône l'objet
                     AppelerCoroutineInstancierObjet();
+
+                // Si l'interraction se fait avec l'objet contenant la collision des mouettes,
+                if (trigger.name == "Collision Mouettes")
+                    // Appeler la coroutine qui permet de gérer l'animation d'attaque de la mouette
+                    objetACloner.GetComponent<AnimerMouette>().StartCoroutine("GestionAnimations", "Attaque");
+
                 break;
 
             // S'il s'agit d'un fruit;
             case "Fruit":
+                // Si l'interraction se fait avec le mur qui fait téléporter le fruit,
                 if (trigger.name == "Trigger Fruits")
+                    // Appeler la méthode qui clône l'objet
                     AppelerCoroutineInstancierObjet();
 
+                // Si l'interraction se fait avec le joueur OU le dragon,
                 if (trigger.CompareTag("Player") || trigger.CompareTag("Dragon"))
+                    // Appeler la méthode qui fait réduire l'échelle du fruit
                     objetACloner.GetComponent<DeplacementFruit>().reduireEchelle = true;
                 break;
 
@@ -124,8 +159,10 @@ public class GererCollisions : MonoBehaviour
                     // Appeler la fonction qui réduit le nombre de vies
                     GererVies.ReduireVie();
 
-                    // Exécuter la coroutine qui fait donner des dégâts au dragon
-                    StartCoroutine(DegatsDragon());
+                    // Si le dragon n'est pas touché,
+                    if (!estTouche)
+                        StartCoroutine(DegatsDragon());
+
 
                     break;
 
@@ -218,50 +255,71 @@ public class GererCollisions : MonoBehaviour
 
     IEnumerator DegatsDragon()
     {
-        // Si le dragon n'est pas touché,
-        if (!estTouche)
+        // Le dragon est touché
+        estTouche = false;
+
+        // Le dragon ne peut plus bouger
+        GetComponent<DeplacementDragon>().peutBouger = false;
+
+        if (GererVies.nombreVies > 0)
         {
-            // Le dragon est touché
-            estTouche = true;
-
-            // Le dragon ne peut plus bouger
-            peutBouger = false;
-
             // Jouer l'animation de dégâts
-            //animation.Play();
+            gameObject.GetComponent<GererAssetsDragon>().AnimerDragon("Dégâts");
 
             // Patienter la fin de l'animation
-            //yield return new WaitForSeconds(animation.clip.length);
-        }
+            yield return new WaitForSeconds(gameObject.GetComponent<Animation>().clip.length + delaiClignotement);
 
-        // Si le dragon ne clignotte pas,
-        if (!clignote)
-        {
-            // Le dragon clignote
-            clignote = true;
+            // Jouer l'animation initiale
+            gameObject.GetComponent<GererAssetsDragon>().AnimerDragon("Inactif");
 
-            // Le dragon peut bouger
-            peutBouger = true;
-
-            // Faire clignoter le dragon 5 fois
-            for (int i = 0; i < 5; i++)
+            // Si le dragon ne clignotte pas,
+            if (!clignote)
             {
-                // Désactiver le matériel du dragon
-                materielCorps.color = new Color(materielCorps.color.r, materielCorps.color.g, materielCorps.color.b, 0f);
-                materielYeux.color = new Color(materielYeux.color.r, materielYeux.color.g, materielYeux.color.b, 0f);
-                yield return new WaitForSeconds(0.1f);
+                // Le dragon clignote
+                clignote = true;
 
-                // Activer le matériel du dragon
-                materielCorps.color = new Color(materielCorps.color.r, materielCorps.color.g, materielCorps.color.b, 1f);
-                materielYeux.color = new Color(materielYeux.color.r, materielYeux.color.g, materielYeux.color.b, 1f);
-                yield return new WaitForSeconds(0.1f);
+                // Le dragon peut bouger
+                GetComponent<DeplacementDragon>().peutBouger = true;
+
+                // Faire clignoter le dragon 10 fois
+                for (int i = 0; i < nombreClignotements; i++)
+                {
+                    ///////////////////////////////////////////////
+                    /* Créer un matériel Universal Render Pipeline
+                     * pour chaque dragon dans la scène Jeu,
+                     * afin qu'il diffère de celui de la Galerie */
+                    ///////////////////////////////////////////////
+
+                    // Désactiver le matériel du dragon
+                    materielCorps.color = new Color(materielCorps.color.r, materielCorps.color.g, materielCorps.color.b, 0f);
+                    materielYeux.color = new Color(materielYeux.color.r, materielYeux.color.g, materielYeux.color.b, 0f);
+                    yield return new WaitForSeconds(vitesseClignotement);
+
+                    // Activer le matériel du dragon
+                    materielCorps.color = new Color(materielCorps.color.r, materielCorps.color.g, materielCorps.color.b, 1f);
+                    materielYeux.color = new Color(materielYeux.color.r, materielYeux.color.g, materielYeux.color.b, 1f);
+                    yield return new WaitForSeconds(vitesseClignotement);
+                }
             }
-
-            // Le dragon n'est plus en train de clignoter
-            clignote = false;
-
-            // Le dragon n'est plus touché
-            estTouche = false;
         }
+
+        else
+        {
+            gameObject.GetComponent<GererAssetsDragon>().AnimerDragon("Mort");
+
+            gameObject.GetComponent<Rigidbody>().useGravity = true;
+
+            gameObject.GetComponent<BoxCollider>().enabled = false;
+
+            Destroy(gameObject, 5f);
+
+            Debug.Log("Partie terminée");
+        }
+
+        // Le dragon n'est plus en train de clignoter
+        clignote = false;
+
+        // Le dragon n'est plus touché
+        estTouche = false;
     }
 }

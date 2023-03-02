@@ -5,7 +5,7 @@ using UnityEngine;
 public class GererVies : MonoBehaviour
 {
     public GameObject[] iconesVies;
-    private int nombreVies;
+    public static int nombreVies;
 
     void Start()
     {

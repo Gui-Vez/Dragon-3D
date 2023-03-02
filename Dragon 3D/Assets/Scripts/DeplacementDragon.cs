@@ -16,43 +16,86 @@ public class DeplacementDragon : MonoBehaviour
     public float reculMurs = 0.05f;
     public float delaiBouger = 0.25f;
 
+    private bool seDeplace = false;
+    public bool peutBouger = true;
+
+    private AnimationClip precedenteAnimation;
+    private Rigidbody Rigidbody;
+    public Vector3 valeurVelociteMinimale = new Vector3(0.5f, 0.5f, 0.5f);
+
+    private Vector3 positionInitiale;
+
+    private void Start()
+    {
+        precedenteAnimation = GetComponent<Animation>().clip;
+        Rigidbody = GetComponent<Rigidbody>();
+
+        positionInitiale = transform.position;
+    }
+
     void Update()
     {
-        //// Défilement Horizontal ////
-        if (!estEnContactAvecUnMurHorizontal)
+        // Si le dragon peut bouger,
+        if (peutBouger)
         {
-            horizontal = Input.GetAxis("Horizontal");
-            Vector3 nouvellePosition = transform.position + new Vector3(horizontal, 0, 0) * vitesseDeplacement * Time.deltaTime;
-            transform.position = nouvellePosition;
+            //// Défilement Horizontal ////
+            if (!estEnContactAvecUnMurHorizontal)
+            {
+                horizontal = Input.GetAxis("Horizontal");
+                Vector3 nouvellePosition = transform.position + new Vector3(horizontal, 0, 0) * vitesseDeplacement * Time.deltaTime;
+                transform.position = nouvellePosition;
+            }
+
+            else if (delaiRestantBougerHorizontal > 0)
+                delaiRestantBougerHorizontal -= Time.deltaTime;
+
+            else
+                estEnContactAvecUnMurHorizontal = false;
+
+
+            //// Défilement Vertical ////
+            if (!estEnContactAvecUnMurVertical)
+            {
+                vertical = Input.GetAxis("Vertical");
+                Vector3 nouvellePosition = transform.position + new Vector3(0, vertical, 0) * vitesseDeplacement * Time.deltaTime;
+                transform.position = nouvellePosition;
+            }
+
+            else if (delaiRestantBougerVertical > 0)
+                delaiRestantBougerVertical -= Time.deltaTime;
+
+            else
+                estEnContactAvecUnMurVertical = false;
         }
 
-        else if (delaiRestantBougerHorizontal > 0)
+        if (peutBouger)
         {
-            delaiRestantBougerHorizontal -= Time.deltaTime;
-        }
+            Vector3 velocite = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical")) * vitesseDeplacement;
 
-        else
-        {
-            estEnContactAvecUnMurHorizontal = false;
-        }
+            if (velocite.x > valeurVelociteMinimale.x || velocite.z > valeurVelociteMinimale.z ||
+                velocite.x < valeurVelociteMinimale.x || velocite.z < valeurVelociteMinimale.z)
+                seDeplace = true;
+
+            else
+                seDeplace = false;
 
 
-        //// Défilement Vertical ////
-        if (!estEnContactAvecUnMurVertical)
-        {
-            vertical = Input.GetAxis("Vertical");
-            Vector3 nouvellePosition = transform.position + new Vector3(0, vertical, 0) * vitesseDeplacement * Time.deltaTime;
-            transform.position = nouvellePosition;
-        }
+            //if (precedenteAnimation != GetComponent<Animation>().clip)
+            //{
+            //    if (seDeplace)
+            //        gameObject.GetComponent<GererAssetsDragon>().AnimerDragon("Marcher");
 
-        else if (delaiRestantBougerVertical > 0)
-        {
-            delaiRestantBougerVertical -= Time.deltaTime;
-        }
+            //    else
+            //        gameObject.GetComponent<GererAssetsDragon>().AnimerDragon("Inactif");
+            //}
 
-        else
-        {
-            estEnContactAvecUnMurVertical = false;
+            if (seDeplace)
+                gameObject.GetComponent<GererAssetsDragon>().AnimerDragon("Marcher");
+
+            else
+                gameObject.GetComponent<GererAssetsDragon>().AnimerDragon("Inactif");
+
+            precedenteAnimation = GetComponent<Animation>().clip;
         }
     }
 
@@ -78,6 +121,14 @@ public class DeplacementDragon : MonoBehaviour
 
             Vector3 nouvellePosition = transform.position + normal * reculMurs;
             transform.position = nouvellePosition;
+        }
+    }
+    
+    void OnTriggerEnter(Collider trigger)
+    {
+        if (trigger.gameObject.tag == "Mur")
+        {
+            transform.position = positionInitiale;
         }
     }
 }

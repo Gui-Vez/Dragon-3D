@@ -15,15 +15,15 @@ public class GererScore : MonoBehaviour
     public int[] tableauValeursPointageFruits;
     public static Dictionary<string, int> pointagesFruits = new Dictionary<string, int>()
     {
-        {"apple"     , 10},
-        {"pear"      , 20},
-        {"banana"    , 30},
-        {"cherries"  , 40},
-        {"lemon"     , 50},
-        {"peach"     , 40},
-        {"strawberry", 30},
-        {"watermelon", 20},
-        {"avocado"   , 10}
+        {"apple"     , 20},
+        {"pear"      , 40},
+        {"banana"    , 60},
+        {"cherries"  , 80},
+        {"lemon"     , 100},
+        {"peach"     , 80},
+        {"strawberry", 60},
+        {"watermelon", 40},
+        {"avocado"   , 20}
     };
 
     public int valeurFruitDefaut = 10;
