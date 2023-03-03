@@ -14,17 +14,26 @@ public class GenerationObjet : MonoBehaviour
     private int nombreFruitsActifs = 0;
     private int nombreFruitsPrecedent;
 
-    public static List<GameObject> listeNuages = new List<GameObject>();
-    private GameObject[] nuages;
-    private int nombreNuagesActifs = 0;
-    private int nombreNuagesPrecedent;
-
     public static int fruitsObtenus = 0;
     public int fruitsParMouettes = 2;
     public int nombreFruitsRequisInitial = 1;
 
     public float delaiActivationMouettes = 0.5f;
     public float delaiActivationFruits = 1f;
+
+    private Transform playerTransform;
+    public static List<GameObject> listeNuages = new List<GameObject>();
+    public GameObject[] nuages;
+
+    public int nombreNuages = 20; // Number of clouds to generate
+    public float distanceMin = 0f; // Minimum distance from player to generate clouds
+    public float distanceMax = 200f; // Maximum distance from player to generate clouds
+    public float altitudeMin = 5f; // Minimum altitude of clouds
+    public float altitudeMax = 100f; // Maximum altitude of clouds
+    public float margeCoteMin = 200f; // Minimum offset from terrain center for cloud position
+    public float margeCoteMax = 500f; // Maximum offset from terrain center for cloud position
+
+
 
     void Start()
     {
@@ -66,19 +75,49 @@ public class GenerationObjet : MonoBehaviour
 
             case "Nuages":
 
-                nombreFruitsPrecedent = nombreNuagesActifs;
+                playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
 
                 nuages = GameObject.FindGameObjectsWithTag("Nuage");
 
                 foreach (GameObject nuage in nuages)
                 {
                     listeNuages.Add(nuage.transform.parent.gameObject);
+                    nuage.transform.parent.gameObject.SetActive(false);
                 }
 
-                ActiverNuages();
+                for (int i = 0; i < nombreNuages; i++)
+                    CreerNuage();
 
                 break;
         }
+    }
+
+    public void CreerNuage()
+    {
+        // Choose random cloud prefab from array
+        GameObject cloudPrefab = listeNuages[Random.Range(0, listeNuages.Count)];
+
+        cloudPrefab.GetComponentInChildren<GererCollisions>().enabled = true;
+        cloudPrefab.GetComponentInChildren<DeplacementDecor>().enabled = true;
+
+        // Choose random side to generate cloud on (left or right)
+        bool generateOnLeft = Random.value < 0.5f;
+
+        // Calculate position of cloud
+        float xPos = generateOnLeft ?
+            Random.Range(-margeCoteMax, -margeCoteMin) :
+            Random.Range(margeCoteMin, margeCoteMax);
+
+        float zPos = Random.Range(transform.position.z + distanceMin, transform.position.z + distanceMax);
+        float yPos = Random.Range(transform.position.y + altitudeMin, transform.position.y + altitudeMax);
+        Vector3 cloudPosition = new Vector3(xPos, yPos, zPos);
+
+        // Instantiate cloud prefab at position
+        GameObject cloudInstance = Instantiate(cloudPrefab, cloudPosition, Quaternion.identity, transform);
+
+        cloudInstance.name = cloudPrefab.name;
+
+        cloudInstance.SetActive(true);
     }
 
     void Update()
@@ -96,6 +135,20 @@ public class GenerationObjet : MonoBehaviour
 
                 if (nombreFruitsPrecedent != nombreFruitsActifs)
                     nombreFruitsPrecedent = nombreFruitsActifs;
+
+                break;
+
+            case "Nuages":
+
+                // Destroy clouds that are too far behind the player
+                //for (int i = listeNuages.Count - 1; i >= 0; i--)
+                //{
+                //    if (playerTransform.position.z - listeNuages[i].transform.position.z > maxDistance)
+                //    {
+                //        Destroy(listeNuages[i]);
+                //        listeNuages.RemoveAt(i);
+                //    }
+                //}
 
                 break;
         }
@@ -142,15 +195,5 @@ public class GenerationObjet : MonoBehaviour
         int indexFruit = Random.Range(0, listeFruits.Count);
 
         listeFruits[indexFruit].SetActive(true);
-    }
-
-    void ActiverNuages()
-    {
-        for (int i = listeNuages.Count - 1; i >= nombreNuagesActifs; i--)
-            listeNuages[i].SetActive(false);
-
-        int indexNuage = Random.Range(0, listeNuages.Count);
-
-        listeNuages[indexNuage].SetActive(true);
     }
 }

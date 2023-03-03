@@ -16,6 +16,12 @@ public class DeplacementFruit : MonoBehaviour
     public bool reduireEchelle;
     public float vitesseEchelle = 1f;
 
+    private Transform particules;
+    private GameObject traceeEtoile;
+    private GameObject etoileEclatante;
+
+    private bool fruitObtenu;
+
     void Start()
     {
         // Générer une vitesse de déplacement aléatoire
@@ -26,6 +32,25 @@ public class DeplacementFruit : MonoBehaviour
 
         // Sauvegarder la position en y initiale
         //initialY = transform.localPosition.y;
+
+        fruitObtenu = false;
+
+        particules = gameObject.transform.parent.Find("Particules");
+
+        traceeEtoile = particules.Find("Tracée d'étoile").gameObject;
+        etoileEclatante = particules.Find("Étoile éclatante").gameObject;
+
+        if (traceeEtoile != null)
+        {
+            traceeEtoile.SetActive(true);
+            traceeEtoile.transform.position = particules.position;
+        }
+
+        if (etoileEclatante != null)
+        {
+            etoileEclatante.transform.position = particules.position;
+            etoileEclatante.SetActive(false);
+        }
     }
 
     void Update()
@@ -59,6 +84,9 @@ public class DeplacementFruit : MonoBehaviour
 
         if (reduireEchelle)
             ReduireEchelle();
+
+        if (particules != null && !fruitObtenu)
+            PositionnerParticules();
     }
 
     void ReduireEchelle()
@@ -77,6 +105,28 @@ public class DeplacementFruit : MonoBehaviour
             gameObject.GetComponent<SphereCollider>().enabled = false;
 
             transform.localScale -= new Vector3(vitesseEchelle, vitesseEchelle, vitesseEchelle);
+        }
+    }
+
+    void PositionnerParticules()
+    {
+        particules.position = gameObject.transform.position;
+    }
+
+    public void GererParticulesFruitObtenu()
+    {
+        fruitObtenu = true;
+
+        if (traceeEtoile != null)
+        {
+            traceeEtoile.transform.position = gameObject.transform.position;
+            traceeEtoile.SetActive(false);
+        }
+
+        if (etoileEclatante != null)
+        {
+            etoileEclatante.SetActive(true);
+            etoileEclatante.transform.position = gameObject.transform.position;
         }
     }
 }

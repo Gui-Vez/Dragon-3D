@@ -34,8 +34,14 @@ public class GererCollisions : MonoBehaviour
     public float delaiClignotement = 0.05f;
     public int nombreClignotements = 10;
     public float vitesseClignotement = 0.1f;
+    public float delaiRemiseANiveau = 0.5f;
 
     private GameObject dragonJoueur;
+
+    public static GameObject[] terrains;
+    public static GameObject dernierTerrain;
+    public static int indexDernierTerrain;
+
 
     void Start()
     {
@@ -83,6 +89,8 @@ public class GererCollisions : MonoBehaviour
             if (dragonJoueur == null)
                 dragonJoueur = GameObject.FindGameObjectWithTag("Player");
         }
+
+        terrains = GameObject.FindGameObjectsWithTag("Terrain");
     }
 
     void Update()
@@ -123,15 +131,23 @@ public class GererCollisions : MonoBehaviour
 
                 // Si l'interraction se fait avec le joueur OU le dragon,
                 if (trigger.CompareTag("Player") || trigger.CompareTag("Dragon"))
+                {
                     // Appeler la méthode qui fait réduire l'échelle du fruit
                     objetACloner.GetComponent<DeplacementFruit>().reduireEchelle = true;
+
+                    // Gérer les particules du fruit obtenu
+                    objetACloner.GetComponent<DeplacementFruit>().GererParticulesFruitObtenu();
+                }
+                    
                 break;
 
             // S'il s'agit d'un nuage;
             case "Nuage":
                 if (trigger.name == "Trigger Nuages")
                 {
+                    GenerationObjet.CreerNuage();
 
+                    Destroy(objetACloner.transform.parent.gameObject);
                 }
                 break;
 
@@ -139,7 +155,24 @@ public class GererCollisions : MonoBehaviour
             case "Terrain":
                 if (trigger.name == "Trigger Terrain")
                 {
+                    if (dernierTerrain == null)
+                    {
+                        dernierTerrain = terrains[terrains.Length - 1];
+                        indexDernierTerrain = terrains.Length - 1;
+                    }
 
+                    else
+                    {
+                        indexDernierTerrain = (indexDernierTerrain + 1) % terrains.Length;
+                        dernierTerrain = dernierTerrain.transform.parent.GetChild(indexDernierTerrain).gameObject;
+                    }
+
+                    // Get the position and size of the last object
+                    Vector3 lastObjectPosition = dernierTerrain.transform.position;
+
+                    // Set the position of the new object next to the last object
+                    Vector3 newPosition = new Vector3(lastObjectPosition.x, lastObjectPosition.y, lastObjectPosition.z + dernierTerrain.GetComponent<BoxCollider>().size.z);
+                    objetACloner.transform.position = newPosition;
                 }
                 break;
 
@@ -156,13 +189,17 @@ public class GererCollisions : MonoBehaviour
                 // Une mouette;
                 case "Mouette":
 
-                    // Appeler la fonction qui réduit le nombre de vies
-                    GererVies.ReduireVie();
-
                     // Si le dragon n'est pas touché,
                     if (!estTouche)
-                        StartCoroutine(DegatsDragon());
+                    {
+                        // Le dragon est touché
+                        estTouche = true;
 
+                        // Appeler la fonction qui réduit le nombre de vies
+                        GererVies.ReduireVie();
+
+                        StartCoroutine(AffligerDegatsDragon());
+                    }
 
                     break;
 
@@ -217,8 +254,11 @@ public class GererCollisions : MonoBehaviour
         // Faire patienter pendant un délai
         yield return new WaitForSeconds(delai);
 
+        // Créer un objet d'instance servant de clône
+        GameObject instanceObjet;
+
         // Instancier un objet
-        GameObject instanceObjet = Instantiate(objetACloner, positionAleatoire, Quaternion.identity, objetACloner.transform.parent);
+        instanceObjet = Instantiate(objetACloner, positionAleatoire, Quaternion.identity, objetACloner.transform.parent);
 
         // Transformer l'échelle locale du clône par sa valeur initialle
         instanceObjet.transform.localScale = echelleCloneInitialle;
@@ -253,14 +293,15 @@ public class GererCollisions : MonoBehaviour
         yield return null;
     }
 
-    IEnumerator DegatsDragon()
+    IEnumerator AffligerDegatsDragon()
     {
-        // Le dragon est touché
-        estTouche = false;
-
         // Le dragon ne peut plus bouger
         GetComponent<DeplacementDragon>().peutBouger = false;
 
+        // La collision du dragon est enlevée
+        GetComponent<BoxCollider>().enabled = false;
+
+        // S'il reste encore des vies,
         if (GererVies.nombreVies > 0)
         {
             // Jouer l'animation de dégâts
@@ -271,6 +312,9 @@ public class GererCollisions : MonoBehaviour
 
             // Jouer l'animation initiale
             gameObject.GetComponent<GererAssetsDragon>().AnimerDragon("Inactif");
+
+            // Activer la boîte de collision du dragon
+            GetComponent<BoxCollider>().enabled = true;
 
             // Si le dragon ne clignotte pas,
             if (!clignote)
@@ -300,26 +344,35 @@ public class GererCollisions : MonoBehaviour
                     materielYeux.color = new Color(materielYeux.color.r, materielYeux.color.g, materielYeux.color.b, 1f);
                     yield return new WaitForSeconds(vitesseClignotement);
                 }
+
+                // Le dragon n'est plus en train de clignoter
+                clignote = false;
+
+                // Attendre pendant un certain délai supplémentaire
+                yield return new WaitForSeconds(delaiRemiseANiveau);
+
+                // Le dragon n'est plus touché
+                estTouche = false;
             }
         }
 
+        // Sinon,
         else
         {
+            // Exécuter l'animation de mort
             gameObject.GetComponent<GererAssetsDragon>().AnimerDragon("Mort");
 
+            // Activer la gravité du dragon
             gameObject.GetComponent<Rigidbody>().useGravity = true;
 
-            gameObject.GetComponent<BoxCollider>().enabled = false;
+            // Le dragon n'est plus touché
+            estTouche = false;
 
+            // Détruire l'objet après 5 secondes
             Destroy(gameObject, 5f);
 
+            // La partie est terminée
             Debug.Log("Partie terminée");
         }
-
-        // Le dragon n'est plus en train de clignoter
-        clignote = false;
-
-        // Le dragon n'est plus touché
-        estTouche = false;
     }
 }
