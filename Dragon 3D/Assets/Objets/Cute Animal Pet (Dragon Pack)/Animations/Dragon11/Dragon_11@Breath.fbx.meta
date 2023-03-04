@@ -1,0 +1,449 @@
+fileFormatVersion: 2
+guid: 77117c37f89e0904d8515717039f4fb9
+ModelImporter:
+  serializedVersion: 22103
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: Bip001
+  - first:
+      1: 100002
+    second: Bip001_Head
+  - first:
+      1: 100004
+    second: Bip001_L_Calf
+  - first:
+      1: 100006
+    second: Bip001_L_Thigh
+  - first:
+      1: 100008
+    second: Bip001_Neck
+  - first:
+      1: 100010
+    second: Bip001_Pelvis
+  - first:
+      1: 100012
+    second: Bip001_R_Calf
+  - first:
+      1: 100014
+    second: Bip001_R_Thigh
+  - first:
+      1: 100016
+    second: Bip001_Spine
+  - first:
+      1: 100018
+    second: Bone001_L_Fleg
+  - first:
+      1: 100020
+    second: Bone001_R_Fleg
+  - first:
+      1: 100022
+    second: Bone002_L_Wing
+  - first:
+      1: 100024
+    second: Bone002_R_Wing
+  - first:
+      1: 100026
+    second: Bone003_L_Wing
+  - first:
+      1: 100028
+    second: Bone003_R_Wing
+  - first:
+      1: 100030
+    second: Bone004_L_Wing
+  - first:
+      1: 100032
+    second: Bone004_R_Wing
+  - first:
+      1: 100034
+    second: Bone005_Tail
+  - first:
+      1: 100036
+    second: Bone006_Tail
+  - first:
+      1: 100038
+    second: Bone_Jaw
+  - first:
+      1: 100040
+    second: //RootNode
+  - first:
+      1: 100042
+    second: Dragon_11_0
+  - first:
+      1: 100044
+    second: Dragon_11_2
+  - first:
+      1: 100046
+    second: Dragon_11_base
+  - first:
+      1: 100048
+    second: Shadow
+  - first:
+      1: 100050
+    second: Shadow_0
+  - first:
+      1: 100052
+    second: Skin
+  - first:
+      4: 400000
+    second: Bip001
+  - first:
+      4: 400002
+    second: Bip001_Head
+  - first:
+      4: 400004
+    second: Bip001_L_Calf
+  - first:
+      4: 400006
+    second: Bip001_L_Thigh
+  - first:
+      4: 400008
+    second: Bip001_Neck
+  - first:
+      4: 400010
+    second: Bip001_Pelvis
+  - first:
+      4: 400012
+    second: Bip001_R_Calf
+  - first:
+      4: 400014
+    second: Bip001_R_Thigh
+  - first:
+      4: 400016
+    second: Bip001_Spine
+  - first:
+      4: 400018
+    second: Bone001_L_Fleg
+  - first:
+      4: 400020
+    second: Bone001_R_Fleg
+  - first:
+      4: 400022
+    second: Bone002_L_Wing
+  - first:
+      4: 400024
+    second: Bone002_R_Wing
+  - first:
+      4: 400026
+    second: Bone003_L_Wing
+  - first:
+      4: 400028
+    second: Bone003_R_Wing
+  - first:
+      4: 400030
+    second: Bone004_L_Wing
+  - first:
+      4: 400032
+    second: Bone004_R_Wing
+  - first:
+      4: 400034
+    second: Bone005_Tail
+  - first:
+      4: 400036
+    second: Bone006_Tail
+  - first:
+      4: 400038
+    second: Bone_Jaw
+  - first:
+      4: 400040
+    second: //RootNode
+  - first:
+      4: 400042
+    second: Dragon_11_0
+  - first:
+      4: 400044
+    second: Dragon_11_2
+  - first:
+      4: 400046
+    second: Dragon_11_base
+  - first:
+      4: 400048
+    second: Shadow
+  - first:
+      4: 400050
+    second: Shadow_0
+  - first:
+      4: 400052
+    second: Skin
+  - first:
+      23: 2300000
+    second: Shadow_0
+  - first:
+      33: 3300000
+    second: Shadow_0
+  - first:
+      43: 4300000
+    second: Dragon_11_0
+  - first:
+      43: 4300002
+    second: Shadow_0
+  - first:
+      74: 7400000
+    second: C4D Animation Take
+  - first:
+      95: 9500000
+    second: //RootNode
+  - first:
+      111: 11100000
+    second: //RootNode
+  - first:
+      137: 13700000
+    second: Dragon_11_0
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: mat_Dragon_01
+    second: {fileID: 2100000, guid: 88aa15dc19aa73e4cbb2515e4ebc3794, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: shadow
+    second: {fileID: 2100000, guid: fa7bae272e8e5ed4daa015dc68ec6609, type: 2}
+  materials:
+    materialImportMode: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 0
+    importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    nodeNameCollisionStrategy: 0
+    fileIdsGeneration: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
+    indexFormat: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 0
+    strictVertexDataChecks: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 0
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 1
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton:
+    - name: Dragon_11(Clone)
+      parentName: 
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Dragon_11_base
+      parentName: Dragon_11(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bip001
+      parentName: Dragon_11_base
+      position: {x: 0.07613829, y: 0.17695564, z: 0.81994283}
+      rotation: {x: 0.31229877, y: -0.35156068, z: 0.6344048, w: 0.61351866}
+      scale: {x: 0.99999994, y: 1, z: 1}
+    - name: Bip001_Pelvis
+      parentName: Bip001
+      position: {x: -0, y: -2.7755576e-17, z: 0}
+      rotation: {x: 0.5, y: -0.5, z: -0.5, w: -0.5}
+      scale: {x: 0.99999994, y: 0.99999994, z: 1}
+    - name: Bip001_Spine
+      parentName: Bip001_Pelvis
+      position: {x: -0.07061973, y: 0.004236281, z: 0.000000074505806}
+      rotation: {x: -0.000019669527, y: 0.000100433805, z: 0.20047678, w: 0.9796984}
+      scale: {x: 1.0000001, y: 1, z: 1}
+    - name: Bip001_Neck
+      parentName: Bip001_Spine
+      position: {x: -0.2141437, y: -0.019077718, z: -0.000000029802308}
+      rotation: {x: 0.0000152530065, y: 0.00010315477, z: 0.048139308, w: 0.9988407}
+      scale: {x: 1, y: 1.0000001, z: 1}
+    - name: Bip001_Head
+      parentName: Bip001_Neck
+      position: {x: -0.095689565, y: -0.000000059604645, z: 2.7755576e-17}
+      rotation: {x: -0.029639442, y: -0.034580316, z: 0.22796252, w: 0.97260416}
+      scale: {x: 0.99999994, y: 0.9999999, z: 1}
+    - name: Bone_Jaw
+      parentName: Bip001_Head
+      position: {x: -0.017319739, y: 0.000631392, z: 0.00000017881604}
+      rotation: {x: 0.82192326, y: -0.5695982, z: -0.0000014884314, w: -0.0000003567501}
+      scale: {x: 0.9999998, y: 0.9999998, z: 0.99999994}
+    - name: Bone002_L_Wing
+      parentName: Bip001_Spine
+      position: {x: -0.13500409, y: -0.04193759, z: 0.04100001}
+      rotation: {x: 0.72104365, y: 0.1994221, z: -0.663501, w: 0.009664326}
+      scale: {x: 1.0000002, y: 1, z: 0.9999999}
+    - name: Bone003_L_Wing
+      parentName: Bone002_L_Wing
+      position: {x: -0.22905827, y: 0.000000044703484, z: 0.00000011920929}
+      rotation: {x: -0.066813916, y: -0.52915454, z: -0.0011344731, w: 0.8458901}
+      scale: {x: 1.0000002, y: 1.0000005, z: 0.99999994}
+    - name: Bone004_L_Wing
+      parentName: Bone002_L_Wing
+      position: {x: -0.22905827, y: -1.2490009e-16, z: -1.110223e-16}
+      rotation: {x: 0.012392241, y: -0.767675, z: 0.049402084, w: 0.6388122}
+      scale: {x: 1.0000006, y: 1.0000001, z: 0.9999999}
+    - name: Bone001_L_Fleg
+      parentName: Bip001_Spine
+      position: {x: -0.12879713, y: 0.038120568, z: 0.091991134}
+      rotation: {x: -0.43933713, y: 0.8972759, z: 0.019061439, w: 0.038929038}
+      scale: {x: 1, y: 0.99999976, z: 0.9999999}
+    - name: Bone002_R_Wing
+      parentName: Bip001_Spine
+      position: {x: -0.13500413, y: -0.04193747, z: -0.040603697}
+      rotation: {x: 0.009339706, y: -0.6632744, z: 0.19952177, w: 0.7212288}
+      scale: {x: 1.0000001, y: 1, z: 0.9999999}
+    - name: Bone003_R_Wing
+      parentName: Bone002_R_Wing
+      position: {x: -0.22905838, y: -0.000000059604645, z: 0.00000005960464}
+      rotation: {x: 0.06681373, y: -0.5291545, z: 0.0011342622, w: 0.84589016}
+      scale: {x: 0.9999998, y: 1, z: 0.99999964}
+    - name: Bone004_R_Wing
+      parentName: Bone002_R_Wing
+      position: {x: -0.22905838, y: 0, z: 0.00000013411045}
+      rotation: {x: -0.012392012, y: -0.7676749, z: -0.04940197, w: 0.63881224}
+      scale: {x: 1, y: 1, z: 0.9999997}
+    - name: Bone001_R_Fleg
+      parentName: Bip001_Spine
+      position: {x: -0.12879717, y: 0.038120866, z: -0.09199988}
+      rotation: {x: 0.038928624, y: 0.01906, z: 0.8972759, w: -0.43933722}
+      scale: {x: 1.0000001, y: 0.9999998, z: 1}
+    - name: Bone005_Tail
+      parentName: Bip001_Pelvis
+      position: {x: 0.078329064, y: -0.036895394, z: 2.7755576e-17}
+      rotation: {x: 0.2623667, y: 0.96496826, z: -0.0000015418797, w: -0.00000041937747}
+      scale: {x: 0.99999994, y: 1, z: 0.99999994}
+    - name: Bone006_Tail
+      parentName: Bone005_Tail
+      position: {x: -0.17331827, y: -2.220446e-16, z: -0.0000000049757602}
+      rotation: {x: 6.054714e-10, y: -0.000000013118824, z: 0.04550346, w: 0.9989642}
+      scale: {x: 1.0000001, y: 1.0000001, z: 1}
+    - name: Bip001_L_Thigh
+      parentName: Bip001_Pelvis
+      position: {x: 0.00000008940697, y: 0.00000017881393, z: 0.10642602}
+      rotation: {x: -0.5204639, y: 0.8497561, z: -0.04205652, w: -0.07254805}
+      scale: {x: 1, y: 1.0000001, z: 1}
+    - name: Bip001_L_Calf
+      parentName: Bip001_L_Thigh
+      position: {x: -0.12893856, y: 0.000000007450581, z: 5.551115e-17}
+      rotation: {x: -0.000000008276376, y: -0.000000011041004, z: 0.15601136, w: 0.9877553}
+      scale: {x: 1.0000001, y: 1.0000002, z: 1}
+    - name: Bip001_R_Thigh
+      parentName: Bip001_Pelvis
+      position: {x: -0.00000020861626, y: -0.00000011920929, z: -0.10642603}
+      rotation: {x: -0.52901274, y: 0.8482934, z: 0.0008408848, w: -0.02330379}
+      scale: {x: 1, y: 1.0000001, z: 1}
+    - name: Bip001_R_Calf
+      parentName: Bip001_R_Thigh
+      position: {x: -0.1289385, y: 0.000000007450581, z: 0}
+      rotation: {x: -1.352854e-10, y: -0.0000000036731505, z: 0.15601127, w: 0.9877553}
+      scale: {x: 1.0000001, y: 0.99999994, z: 1}
+    - name: Dragon_11_2
+      parentName: Dragon_11_base
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Dragon_11_0
+      parentName: Dragon_11_2
+      position: {x: -2.7755576e-17, y: 0.0006218236, z: 0.91229624}
+      rotation: {x: -7.8453476e-31, y: 3.649732e-24, z: 0.000000059604645, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Skin
+      parentName: Dragon_11_0
+      position: {x: -0, y: 0, z: -1.110223e-16}
+      rotation: {x: 0, y: -2.938736e-39, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Dragon_Eye
+      parentName: Dragon_11_2
+      position: {x: -2.7755576e-17, y: 0.0006218236, z: 0.91229624}
+      rotation: {x: -7.8453476e-31, y: 3.649732e-24, z: 0.000000059604645, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Skin_2
+      parentName: Dragon_Eye
+      position: {x: -0, y: 0, z: -1.110223e-16}
+      rotation: {x: 0, y: -2.938736e-39, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Shadow
+      parentName: Dragon_11_base
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Shadow_0
+      parentName: Shadow
+      position: {x: -0, y: 2.8327693e-18, z: 0.01}
+      rotation: {x: -1.110223e-16, y: -2.598681e-23, z: -0.00000015086276, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 1
+  humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  importBlendShapeDeformPercent: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
