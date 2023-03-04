@@ -16,6 +16,7 @@ En chemin, vous collectez des fruits délicieux pour augmenter votre score. Plus
 ## Accès au jeu
 Pour accéder et télécharger le jeu, rendez-vous sur notre page Itch.io à l'adresse suivante : https://heyaitssoup.itch.io/dragon-3d.
 
-Vous pouvez télécharger et installer le jeu sur votre ordinateur. Le jeu est compatible avec les ordinateurs Windows et Mac.
+Vous pouvez télécharger et installer le jeu sur votre ordinateur.
+Le jeu est compatible avec les ordinateurs Windows et Mac.
 
 Amusez-vous bien en jouant à Dragon 3D !
