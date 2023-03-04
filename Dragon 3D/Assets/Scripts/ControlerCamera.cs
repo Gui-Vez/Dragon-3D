@@ -33,7 +33,6 @@ public class ControlerCamera : MonoBehaviour
 
     void Start()
     {
-        
         _transformEnfant = transform.GetChild(0);
     }
 

@@ -5,12 +5,12 @@ using UnityEngine;
 [RequireComponent(typeof(MeshFilter))]
 public class GenerationMesh : MonoBehaviour
 {
-    Mesh mesh;
+    private Mesh mesh;
 
-    Vector3[] sommets;
-    int[] triangles;
-    Vector2[] uvs;
-    Color[] couleurs;
+    private Vector3[] sommets;
+    private int[] triangles;
+    private Vector2[] uvs;
+    private Color[] couleurs;
 
     public Gradient degrade;
 
@@ -36,7 +36,6 @@ public class GenerationMesh : MonoBehaviour
 
     public float hauteurVaguesMin = 0.25f;
     public float hauteurVaguesMax = 0.75f;
-    //private float delaiVagues = 0.5f;
 
     private bool dimensionsValides;
 

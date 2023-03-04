@@ -80,15 +80,6 @@ public class DeplacementDragon : MonoBehaviour
                 seDeplace = false;
 
 
-            //if (precedenteAnimation != GetComponent<Animation>().clip)
-            //{
-            //    if (seDeplace)
-            //        gameObject.GetComponent<GererAssetsDragon>().AnimerDragon("Marcher");
-
-            //    else
-            //        gameObject.GetComponent<GererAssetsDragon>().AnimerDragon("Inactif");
-            //}
-
             if (seDeplace)
                 gameObject.GetComponent<GererAssetsDragon>().AnimerDragon("Marcher");
 

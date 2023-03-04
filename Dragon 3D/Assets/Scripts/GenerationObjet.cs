@@ -21,17 +21,16 @@ public class GenerationObjet : MonoBehaviour
     public float delaiActivationMouettes = 0.5f;
     public float delaiActivationFruits = 1f;
 
-    private Transform playerTransform;
     public static List<GameObject> listeNuages = new List<GameObject>();
-    public GameObject[] nuages;
+    private GameObject[] nuages;
 
-    public int nombreNuages = 20; // Number of clouds to generate
-    public float distanceMin = 0f; // Minimum distance from player to generate clouds
-    public float distanceMax = 200f; // Maximum distance from player to generate clouds
-    public float altitudeMin = 5f; // Minimum altitude of clouds
-    public float altitudeMax = 100f; // Maximum altitude of clouds
-    public float margeCoteMin = 200f; // Minimum offset from terrain center for cloud position
-    public float margeCoteMax = 500f; // Maximum offset from terrain center for cloud position
+    public int nombreNuages = 20;
+    public float distanceMin = 0f;
+    public float distanceMax = 200f;
+    public float altitudeMin = 5f;
+    public float altitudeMax = 100f;
+    public float margeCoteMin = 200f;
+    public float margeCoteMax = 500f;
 
 
 
@@ -75,8 +74,6 @@ public class GenerationObjet : MonoBehaviour
 
             case "Nuages":
 
-                playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-
                 nuages = GameObject.FindGameObjectsWithTag("Nuage");
 
                 foreach (GameObject nuage in nuages)
@@ -94,30 +91,28 @@ public class GenerationObjet : MonoBehaviour
 
     public void CreerNuage()
     {
-        // Choose random cloud prefab from array
-        GameObject cloudPrefab = listeNuages[Random.Range(0, listeNuages.Count)];
+        GameObject nuagePrefab = listeNuages[Random.Range(0, listeNuages.Count)];
 
-        cloudPrefab.GetComponentInChildren<GererCollisions>().enabled = true;
-        cloudPrefab.GetComponentInChildren<DeplacementDecor>().enabled = true;
+        nuagePrefab.GetComponentInChildren<GererCollisions>().enabled = true;
+        nuagePrefab.GetComponentInChildren<DeplacementDecor>().enabled = true;
 
-        // Choose random side to generate cloud on (left or right)
-        bool generateOnLeft = Random.value < 0.5f;
+        // Choisir une position aléatoire entre l'emplacement de gauche ou de droite
+        bool generateAGauche = Random.value < 0.5f;
 
-        // Calculate position of cloud
-        float xPos = generateOnLeft ?
+        // Calculer la position du nuage
+        float posX = generateAGauche ?
             Random.Range(-margeCoteMax, -margeCoteMin) :
             Random.Range(margeCoteMin, margeCoteMax);
 
-        float zPos = Random.Range(transform.position.z + distanceMin, transform.position.z + distanceMax);
-        float yPos = Random.Range(transform.position.y + altitudeMin, transform.position.y + altitudeMax);
-        Vector3 cloudPosition = new Vector3(xPos, yPos, zPos);
+        float posY = Random.Range(transform.position.y + altitudeMin, transform.position.y + altitudeMax);
+        float posZ = Random.Range(transform.position.z + distanceMin, transform.position.z + distanceMax);
+        Vector3 positionNuage = new Vector3(posX, posY, posZ);
 
-        // Instantiate cloud prefab at position
-        GameObject cloudInstance = Instantiate(cloudPrefab, cloudPosition, Quaternion.identity, transform);
+        GameObject instanceNuage = Instantiate(nuagePrefab, positionNuage, Quaternion.identity, transform);
 
-        cloudInstance.name = cloudPrefab.name;
+        instanceNuage.name = nuagePrefab.name;
 
-        cloudInstance.SetActive(true);
+        instanceNuage.SetActive(true);
     }
 
     void Update()
@@ -125,31 +120,13 @@ public class GenerationObjet : MonoBehaviour
         switch (gameObject.name)
         {
             case "Mouettes":
-
                 if (nombreMouettesPrecedent != nombreMouettesActives)
                     nombreMouettesPrecedent = nombreMouettesActives;
-
                 break;
 
             case "Fruits":
-
                 if (nombreFruitsPrecedent != nombreFruitsActifs)
                     nombreFruitsPrecedent = nombreFruitsActifs;
-
-                break;
-
-            case "Nuages":
-
-                // Destroy clouds that are too far behind the player
-                //for (int i = listeNuages.Count - 1; i >= 0; i--)
-                //{
-                //    if (playerTransform.position.z - listeNuages[i].transform.position.z > maxDistance)
-                //    {
-                //        Destroy(listeNuages[i]);
-                //        listeNuages.RemoveAt(i);
-                //    }
-                //}
-
                 break;
         }
     }
@@ -171,11 +148,8 @@ public class GenerationObjet : MonoBehaviour
     {
         fruitsObtenus++;
 
-        // Check if the number of fruits collected is divisible by the specified value
         if (fruitsObtenus % fruitsParMouettes - nombreFruitsRequisInitial == 0)
-        {
             IncrementerNombreMouettes(1);
-        }
     }
 
     void ActiverMouettes()

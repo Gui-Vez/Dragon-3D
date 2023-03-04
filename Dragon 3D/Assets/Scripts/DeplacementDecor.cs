@@ -16,16 +16,9 @@ public class DeplacementDecor : MonoBehaviour
     {
         switch (gameObject.tag)
         {
-            case "Nuage":
-
+            case "Nuage"   :
+            case "Terrain" :
                 transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - vitesseDeplacement);
-
-                break;
-
-            case "Terrain":
-
-                transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - vitesseDeplacement);
-
                 break;
         }
     }

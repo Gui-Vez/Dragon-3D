@@ -8,7 +8,7 @@ public class GererBoutonsUI : MonoBehaviour
     public static GererAssetsDragon _GererAssetsDragon;
 
     public static List<GameObject> ecransBoutonsListe = new List<GameObject>();
-    int indexEcran;
+    private int indexEcran;
 
 
     void Start()
@@ -30,11 +30,6 @@ public class GererBoutonsUI : MonoBehaviour
         // Donner des instructions aux scènes respectives
         switch (GererScenes.sceneActuelle.name)
         {
-            case "EcranTitre":
-
-                break;
-
-
             case "Galerie":
 
                 GererAssetsDragon.TrouverAssetsDragon();

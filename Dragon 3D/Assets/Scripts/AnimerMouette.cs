@@ -17,10 +17,17 @@ public class AnimerMouette : MonoBehaviour
     public float dureeRembobinageAnimations = 0.25f;
     private bool coroutineActivee = false;
 
+    private GererAudio GererAudio;
+    public GameObject contenantGererAudio;
 
     void Start()
     {
         Animator = GetComponent<Animator>();
+
+        // S'il y a un contenant de gestion d'audio,
+        if (contenantGererAudio != null)
+            // Obtenir la composante de script de cet objet
+            GererAudio = contenantGererAudio.GetComponent<GererAudio>();
     }
 
     void Update()
@@ -53,6 +60,8 @@ public class AnimerMouette : MonoBehaviour
                 i_attaque = Animator.GetInteger("i_attaque");
                 Animator.SetInteger("i_attaque", indexAleatoireAttaque);
                 Animator.SetTrigger("t_attaque");
+
+                GererAudio.JouerEffetSonore("Seagull attack 0" + (indexAleatoireAttaque + 1).ToString());
 
                 break;
         }

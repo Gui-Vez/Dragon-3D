@@ -10,6 +10,10 @@ public class GererCollisions : MonoBehaviour
     private GererVies GererVies;
     public GameObject contenantGererVies;
 
+    private GererAudio GererAudio;
+    public GameObject contenantGererAudio;
+
+
     private GameObject objetACloner;
 
     public Transform positionEntree;
@@ -42,7 +46,6 @@ public class GererCollisions : MonoBehaviour
     public static GameObject dernierTerrain;
     public static int indexDernierTerrain;
 
-
     void Start()
     {
         // S'il y a un contenant de génération d'objets,
@@ -54,6 +57,11 @@ public class GererCollisions : MonoBehaviour
         if (contenantGererVies != null)
             // Obtenir la composante de script de cet objet
             GererVies = contenantGererVies.GetComponent<GererVies>();
+
+        // S'il y a un contenant de gestion d'audio,
+        if (contenantGererAudio != null)
+            // Obtenir la composante de script de cet objet
+            GererAudio = contenantGererAudio.GetComponent<GererAudio>();
 
         if (objetCorps != null)
             materielCorps = objetCorps.GetComponent<SkinnedMeshRenderer>().material;
@@ -205,7 +213,11 @@ public class GererCollisions : MonoBehaviour
 
                 // Un fruit;
                 case "Fruit":
-                    
+
+                    GererAudio.JouerEffetSonore("Slurp");
+
+                    Invoke("JouerSonFruitObtenu", 0.25f);
+
                     // Appeler la fonction qui incrémente le nombre de fruits
                     GenerationObjet.IncrementerNombreFruits();
 
@@ -217,6 +229,16 @@ public class GererCollisions : MonoBehaviour
 
                 default:
                     break;
+            }
+        }
+
+        if (gameObject.name == "Collision Mouettes")
+        {
+            if (trigger.CompareTag("Mouette"))
+            {
+                gameObject.GetComponent<BoxCollider>().enabled = false;
+
+                Invoke("ReactiverBoiteCollisionMouettes", 0.5f);
             }
         }
     }
@@ -304,6 +326,8 @@ public class GererCollisions : MonoBehaviour
         // S'il reste encore des vies,
         if (GererVies.nombreVies > 0)
         {
+            GererAudio.JouerEffetSonore("Slap");
+
             // Jouer l'animation de dégâts
             gameObject.GetComponent<GererAssetsDragon>().AnimerDragon("Dégâts");
 
@@ -359,6 +383,10 @@ public class GererCollisions : MonoBehaviour
         // Sinon,
         else
         {
+            GererAudio.JouerEffetSonore("Explosion");
+
+            GererAudio.StartCoroutine("GameOverRoutine");
+
             // Exécuter l'animation de mort
             gameObject.GetComponent<GererAssetsDragon>().AnimerDragon("Mort");
 
@@ -372,7 +400,23 @@ public class GererCollisions : MonoBehaviour
             Destroy(gameObject, 5f);
 
             // La partie est terminée
-            Debug.Log("Partie terminée");
+            GererScenes.partieTerminee = true;
+
+            // Émettre un commentaire dans la console
+            //Debug.Log("Partie terminée");
         }
+    }
+
+    void JouerSonFruitObtenu()
+    {
+        if (GererAudio != null)
+        {
+            GererAudio.JouerEffetSonore("Sparkle 01");
+        }
+    }
+
+    void ReactiverBoiteCollisionMouettes()
+    {
+        gameObject.GetComponent<BoxCollider>().enabled = true;
     }
 }

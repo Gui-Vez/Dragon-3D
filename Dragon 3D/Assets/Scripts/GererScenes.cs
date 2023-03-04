@@ -22,23 +22,43 @@ public class GererScenes : MonoBehaviour
     public Material[] skyboxes;
     private int indexSkyboxActuel = 0;
 
+    public static bool partieTerminee;
+    private bool chargeScene;
+
+    private GererAudio GererAudio;
+    public GameObject contenantGererAudio;
 
     void Start()
     {
+        // La partie n'est pas terminée
+        partieTerminee = false;
+
         // Trouver la scène actuelle
         sceneActuelle = SceneManager.GetActiveScene();
+
+        // S'il y a un contenant de gestion d'audio,
+        if (contenantGererAudio != null)
+            // Obtenir la composante de script de cet objet
+            GererAudio = contenantGererAudio.GetComponent<GererAudio>();
 
         // Donner des instructions aux scènes respectives
         switch (sceneActuelle.name)
         {
-            case "EcranTitre":
+            case "Jeu":
 
-                //StartCoroutine(ChargerScene("Jeu", 3f));
+                GererScore.scoreActuel = 0;
+                GenerationObjet.fruitsObtenus = 0;
+                GenerationObjet.listeMouettes = new List<GameObject>();
+                GenerationObjet.listeFruits = new List<GameObject>();
+                GenerationObjet.listeNuages = new List<GameObject>();
 
                 break;
 
-
             case "Galerie":
+
+                GererAssetsDragon.personnagesJoueur = GameObject.FindGameObjectsWithTag("Player");
+                GererAssetsDragon.personnageJoueurActuel = GererAssetsDragon.personnagesJoueur[0];
+                GererBoutonsUI.ecransBoutonsListe = new List<GameObject>();
 
                 boutonsAnimationsContenant = GameObject.Find("Animations");
 
@@ -50,9 +70,9 @@ public class GererScenes : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && sceneActuelle.name != "EcranTitre")
         {
-            QuitterJeu();
+            StartCoroutine(ChargerScene("EcranTitre", 0f));
         }
 
         // Donner des instructions aux scènes respectives
@@ -60,8 +80,26 @@ public class GererScenes : MonoBehaviour
         {
             case "EcranTitre":
 
+                if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    QuitterJeu();
+                }
+
                 break;
 
+            case "Jeu":
+
+                if (partieTerminee)
+                {
+                    if (!chargeScene)
+                    {
+                        chargeScene = true;
+
+                        StartCoroutine(ChargerScene("EcranTitre", 15f));
+                    }
+                }
+
+                break;
 
             case "Galerie":
 
@@ -91,7 +129,7 @@ public class GererScenes : MonoBehaviour
     {
         /*
          * Note pour moi-même :
-         * Pour gérer les textes, il serait préférable d'utiliser des enums plutôt que des listes.
+         * Pour gérer les textes, il serait préférable d'utiliser des enums ou des dictionnaires plutôt que des listes.
          * Ce serait à implémenter plus tard lorsque j'en aurais le temps pour m'y focaliser davantage.
          */
 
@@ -152,6 +190,8 @@ public class GererScenes : MonoBehaviour
             case "Play":
             case "Jouer":
 
+                GererAudio.JouerEffetSonore("Play");
+
                 StartCoroutine(ChargerScene("Jeu", tempsChargement));
 
                 break;
@@ -159,18 +199,19 @@ public class GererScenes : MonoBehaviour
             case "Gallery":
             case "Galerie":
 
+                GererAudio.JouerEffetSonore("Gallery");
+
                 StartCoroutine(ChargerScene("Galerie", tempsChargement));
 
                 break;
         }
     }
 
-    IEnumerator ChargerScene(string nomScene, float delaiSecondes)
+    public IEnumerator ChargerScene(string nomScene, float delaiSecondes)
     {
         yield return new WaitForSeconds(delaiSecondes);
 
-        // Ouvrir la scène de jeu
-        SceneManager.LoadScene(nomScene);
+        SceneManager.LoadScene(nomScene, LoadSceneMode.Single);
 
         yield return null;
     }

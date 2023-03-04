@@ -33,11 +33,21 @@ public class GererScore : MonoBehaviour
 
     public GameObject EntreeScore;
 
+    private GererAudio GererAudio;
+    public GameObject contenantGererAudio;
+
 
     void Start()
     {
         // Le score précédent est initialisé avec le score actuel
         scorePrecedent = scoreActuel;
+
+        // S'il y a un contenant de gestion d'audio,
+        if (contenantGererAudio != null)
+            // Obtenir la composante de script de cet objet
+            GererAudio = contenantGererAudio.GetComponent<GererAudio>();
+
+        GererAudio.JouerMusiqueAleatoire(GererAudio.exceptionsChansons);
     }
 
     void Update()

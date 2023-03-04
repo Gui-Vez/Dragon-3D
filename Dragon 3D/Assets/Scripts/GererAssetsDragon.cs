@@ -44,7 +44,8 @@ public class GererAssetsDragon : MonoBehaviour
 
         AnimerDragon("Idle");
 
-        EnleverDragons();
+        if (GererScenes.sceneActuelle.name == "Galerie")
+            EnleverDragons();
     }
 
     public void AnimerDragon(string animation)
@@ -316,9 +317,9 @@ public class GererAssetsDragon : MonoBehaviour
     void EffectClear()
     {
         GameObject tFindObj = GameObject.FindGameObjectWithTag("Effect");
+
         if (tFindObj != null)
         {
-            //DestroyImmediate(tFindObj);
             Destroy(tFindObj);
         }
     }
