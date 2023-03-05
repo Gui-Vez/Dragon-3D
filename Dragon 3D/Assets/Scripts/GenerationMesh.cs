@@ -45,6 +45,8 @@ public class GenerationMesh : MonoBehaviour
     private static List<GameObject> spheresGizmo = new List<GameObject>();
     private static int maxNombreSpheres;
 
+    public bool peutActiverSpheres;
+
     void Start()
     {
         // Créer un nouveau mesh
@@ -93,8 +95,9 @@ public class GenerationMesh : MonoBehaviour
             tailleZPrecedente = tailleZ;
             tailleYPrecedente = tailleY;
 
+            if (peutActiverSpheres)
             // Activer le menu Gizmo
-            //basculerMenuGizmo = true;
+            basculerMenuGizmo = true;
         }
     }
 
