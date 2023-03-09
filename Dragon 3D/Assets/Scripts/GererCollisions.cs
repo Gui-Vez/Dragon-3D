@@ -90,14 +90,19 @@ public class GererCollisions : MonoBehaviour
                 break;
         }
 
+        // Si le nom de l'objet s'agit de la collision des mouettes,
         if (gameObject.name == "Collision Mouettes")
         {
+            // Trouver l'objet dragon
             dragonJoueur = GameObject.FindGameObjectWithTag("Dragon");
 
+            // S'il n'y a pas d'objet dragon,
             if (dragonJoueur == null)
+                // Trouver l'objet joueur
                 dragonJoueur = GameObject.FindGameObjectWithTag("Player");
         }
 
+        // Trouver les terrains
         terrains = GameObject.FindGameObjectsWithTag("Terrain");
     }
 
@@ -137,7 +142,7 @@ public class GererCollisions : MonoBehaviour
                     // Appeler la méthode qui clône l'objet
                     AppelerCoroutineInstancierObjet();
 
-                // Si l'interraction se fait avec le joueur OU le dragon,
+                // Si l'interaction se fait avec le joueur OU le dragon,
                 if (trigger.CompareTag("Player") || trigger.CompareTag("Dragon"))
                 {
                     // Appeler la méthode qui fait réduire l'échelle du fruit
@@ -151,27 +156,42 @@ public class GererCollisions : MonoBehaviour
 
             // S'il s'agit d'un nuage;
             case "Nuage":
+
+                // Si l'interaction se fait avec le mur qui fait téléporter le nuage,
                 if (trigger.name == "Trigger Nuages")
                 {
+                    // Créer un nuage
                     GenerationObjet.CreerNuage();
 
+                    // Détruire l'objet à cloner
                     Destroy(objetACloner.transform.parent.gameObject);
                 }
+
                 break;
 
             // S'il s'agit d'un terrain;
             case "Terrain":
+
+                // Si l'interaction se fait avec le mur qui fait téléporter le terrain,
                 if (trigger.name == "Trigger Terrain")
                 {
+                    // S'il n'y a pas de dernier terrain,
                     if (dernierTerrain == null)
                     {
+                        // Affecter le dernier terrain à celui qui correspond au dernier du tableau
                         dernierTerrain = terrains[terrains.Length - 1];
+
+                        // Affecter l'index du dernier terrain également
                         indexDernierTerrain = terrains.Length - 1;
                     }
 
+                    // Sinon,
                     else
                     {
+                        // Modifier l'index du dernier terrain en fonction de la taille du tableau
                         indexDernierTerrain = (indexDernierTerrain + 1) % terrains.Length;
+
+                        // Obtenir l'objet du dernier terrain (?) --> Peut potentiellement causer des erreurs
                         dernierTerrain = dernierTerrain.transform.parent.GetChild(indexDernierTerrain).gameObject;
                     }
 
@@ -182,6 +202,7 @@ public class GererCollisions : MonoBehaviour
                     Vector3 newPosition = new Vector3(lastObjectPosition.x, lastObjectPosition.y, lastObjectPosition.z + dernierTerrain.GetComponent<BoxCollider>().size.z);
                     objetACloner.transform.position = newPosition;
                 }
+
                 break;
 
             default:
@@ -232,12 +253,16 @@ public class GererCollisions : MonoBehaviour
             }
         }
 
+        // Si l'objet s'agit de la boîte qui interragit avec la mouette,
         if (gameObject.name == "Collision Mouettes")
         {
+            // Si l'objet d'interaction est une mouette,
             if (trigger.CompareTag("Mouette"))
             {
+                // Enlever la boite de collision de l'objet
                 gameObject.GetComponent<BoxCollider>().enabled = false;
 
+                // Réactiver la boite de collision après un certain délai
                 Invoke("ReactiverBoiteCollisionMouettes", 0.5f);
             }
         }
@@ -409,14 +434,17 @@ public class GererCollisions : MonoBehaviour
 
     void JouerSonFruitObtenu()
     {
+        // S'il y a un script associé à la gestion de l'audio,
         if (GererAudio != null)
         {
+            // Jouer l'effet sonore d'étincellement
             GererAudio.JouerEffetSonore("Sparkle 01");
         }
     }
 
     void ReactiverBoiteCollisionMouettes()
     {
+        // Réactiver la boite de collision de l'objet
         gameObject.GetComponent<BoxCollider>().enabled = true;
     }
 }

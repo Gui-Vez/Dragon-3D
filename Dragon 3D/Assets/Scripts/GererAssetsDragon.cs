@@ -30,21 +30,31 @@ public class GererAssetsDragon : MonoBehaviour
 
     void Start()
     {
+        // Récupérer la référence au composant Animation
         Animation = GetComponent<Animation>();
 
+        // Si la variable personnagesJoueur est nulle,
         if (personnagesJoueur == null)
         {
+            // Initialiser la liste de personnages
             personnagesJoueur = GameObject.FindGameObjectsWithTag("Player");
+
+            // Choisir le personnage joueur actuel
             personnageJoueurActuel = personnagesJoueur[0];
         }
 
+        // Stocker la position initiale de l'objet Dragon
         positionInitialePersonnage = Animal.transform.position;
 
+        // Stocker la texture du corps initiale pour une utilisation ultérieure
         textureCorpsInitiale = bodyMesh.materials[0].GetTexture("_MainTex");
 
+        // Lancer l'animation Idle sur l'objet Dragon
         AnimerDragon("Idle");
 
+        // Si la scène actuelle est "Galerie",
         if (GererScenes.sceneActuelle.name == "Galerie")
+            // supprimer tous les objets de type Dragon
             EnleverDragons();
     }
 
@@ -52,6 +62,7 @@ public class GererAssetsDragon : MonoBehaviour
     {
         Vector3 playerV = Vector3.zero;
 
+        // Lancer les animations sur l'objet Dragon
         switch (animation)
         {
             case "Idle":
@@ -189,6 +200,7 @@ public class GererAssetsDragon : MonoBehaviour
 
     public void TexturerCorps(string textureCorps)
     {
+        // Choisir la texture du corps du dragon
         switch (textureCorps)
         {
             case "Red"   :
@@ -206,14 +218,14 @@ public class GererAssetsDragon : MonoBehaviour
             case "Yellow":
             case "Jaune" : bodyMesh.materials[0].SetTexture("_MainTex", bodyTextureArray[4]); break;
 
-            case "Black":
-            case "Noir" :  bodyMesh.materials[0].SetTexture("_MainTex", bodyTextureArray[5]); break;
+            case "Black" :
+            case "Noir"  : bodyMesh.materials[0].SetTexture("_MainTex", bodyTextureArray[5]); break;
 
-            case "Grey" :
-            case "Gris" :  bodyMesh.materials[0].SetTexture("_MainTex", bodyTextureArray[6]); break;
+            case "Grey"  :
+            case "Gris"  : bodyMesh.materials[0].SetTexture("_MainTex", bodyTextureArray[6]); break;
 
-            case "White":
-            case "Blanc":  bodyMesh.materials[0].SetTexture("_MainTex", bodyTextureArray[7]); break;
+            case "White" :
+            case "Blanc" : bodyMesh.materials[0].SetTexture("_MainTex", bodyTextureArray[7]); break;
 
             case "Random":
             case "Aléatoire":
@@ -233,13 +245,16 @@ public class GererAssetsDragon : MonoBehaviour
 
     void TexturerYeux(int textureYeux)
     {
+        // Choisir la texture des yeux du dragon
         faceMesh.materials[0].SetTexture("_MainTex", faceTextureArray[textureYeux]);
     }
 
     public void ChangerPersonnage(string personnage)
     {
+        // Appeler la méthode qui active les dragons
         ActiverDragons();
 
+        // Selon le personnage en question, choisir ce personnage à afficher
         switch (personnage)
         {
             case "Baby 1" :
@@ -272,34 +287,43 @@ public class GererAssetsDragon : MonoBehaviour
                 break;
         }
 
+        // Enlever les dragons
         EnleverDragons();
     }
 
     void ActiverDragons()
     {
+        // Pour tous les personnages joueurs,
         for (int i = 0; i < personnagesJoueur.Length; i++)
-        {
+            // Activer le dragon
             personnagesJoueur[i].SetActive(true);
-        }
 
+        // Affecter la texture du corps
         bodyMesh.materials[0].SetTexture("_MainTex", textureCorpsInitiale);
     }
 
     void EnleverDragons()
     {
+        // Pour tous les personnages dragon,
         for (int i = 0; i < personnagesJoueur.Length; i++)
         {
+            // Si le dragon correspond à celui sélectionné,
             if (personnagesJoueur[i] == personnageJoueurActuel)
             {
+                // Affecter les composantes du dragon
                 personnagesJoueur[i].transform.position = positionApercuPersonnages;
                 personnageJoueurActuel.GetComponent<Animation>().CrossFade(animationActuelle);
                 faceMesh.materials[0].SetTexture("_MainTex", faceTextureArray[0]);
                 TexturerCorps(textureCorpsActuelle);
             }
 
+            // Sinon,
             else
             {
+                // Transformer la osition du dragon pour le mettre ailleurs que la zone d'affichage
                 personnagesJoueur[i].transform.position = positionInitialePersonnage;
+
+                // Désactiver le dragon
                 personnagesJoueur[i].SetActive(false);
             }
         }
@@ -307,20 +331,24 @@ public class GererAssetsDragon : MonoBehaviour
 
     public static void TrouverAssetsDragon()
     {
+        // Si le dragon existe,
         if (personnageJoueurActuel != null)
+            // Prendre le composant qui gère les boutons UI du dragon
             GererBoutonsUI._GererAssetsDragon = personnageJoueurActuel.GetComponent<GererAssetsDragon>();
 
+        // Sinon, retourner la méthode
         else
             return;
     }
 
     void EffectClear()
     {
+        // Trouver l'objet d'effet spécial
         GameObject tFindObj = GameObject.FindGameObjectWithTag("Effect");
 
+        // S'il existe un effet,
         if (tFindObj != null)
-        {
+            // Détruire cet objet
             Destroy(tFindObj);
-        }
     }
 }

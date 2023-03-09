@@ -33,21 +33,28 @@ public class DeplacementFruit : MonoBehaviour
         // Sauvegarder la position en y initiale
         //initialY = transform.localPosition.y;
 
+        // Le fruit n'est pas obtenu
         fruitObtenu = false;
 
+        // Trouver le transform parent nommé "Particules"
         particules = gameObject.transform.parent.Find("Particules");
 
+        // Trouver les enfants des "Particules" nommés "Tracée d'étoile" et "Étoile éclatante"
         traceeEtoile = particules.Find("Tracée d'étoile").gameObject;
         etoileEclatante = particules.Find("Étoile éclatante").gameObject;
 
+        // S'il y a le particule de tracée d'étoile,
         if (traceeEtoile != null)
         {
+            // Activer et positionner la trace d'étoile
             traceeEtoile.SetActive(true);
             traceeEtoile.transform.position = particules.position;
         }
 
+        // S'il y a le particule d'étoile éclatante,
         if (etoileEclatante != null)
         {
+            // Désactiver et positionner l'étoile éclatante
             etoileEclatante.transform.position = particules.position;
             etoileEclatante.SetActive(false);
         }
@@ -82,50 +89,69 @@ public class DeplacementFruit : MonoBehaviour
         //float y = initialY + Mathf.Sin((Time.time - tempsDepartSinus) * frequenceSinus) * amplitudeSinus;
         //transform.localPosition = new Vector3(transform.localPosition.x, y, transform.localPosition.z);
 
+        // Réduction de l'échelle du fruit s'il faut le faire
         if (reduireEchelle)
             ReduireEchelle();
 
+        // Positionnement des particules attachées au fruit s'il n'a pas été obtenu
         if (particules != null && !fruitObtenu)
             PositionnerParticules();
     }
 
     void ReduireEchelle()
     {
+        // Ralentir la vitesse de réduction de la taille de l'objet en fonction du temps
         //vitesseEchelle *= Time.deltaTime;
-        
+
+        // Si la taille de l'objet est inférieure ou égale à 0,
         if (transform.localScale.x <= 0)
         {
+            // La variable reduireEchelle est définie sur false
             reduireEchelle = false;
 
+            // Appeler une coroutine pour instancier un nouvel objet
             gameObject.GetComponent<GererCollisions>().AppelerCoroutineInstancierObjet();
         }
 
+        // Sinon,
         else
         {
+            // Désactiver la collider sphérique attachée à l'objet de jeu
             gameObject.GetComponent<SphereCollider>().enabled = false;
 
+            // Réduire la taille de l'objet de jeu en utilisant la variable vitesseEchelle pour déterminer la quantité de réduction de la taille
             transform.localScale -= new Vector3(vitesseEchelle, vitesseEchelle, vitesseEchelle);
         }
     }
 
     void PositionnerParticules()
     {
+        // Positionner les particules au-dessus de l'objet de jeu en utilisant la position de l'objet.
         particules.position = gameObject.transform.position;
     }
 
     public void GererParticulesFruitObtenu()
     {
+        // Définit la variable fruitObtenu sur true
         fruitObtenu = true;
 
+        // Si un objet traceeEtoile est attaché à l'objet de jeu,
         if (traceeEtoile != null)
         {
+            // Positionner l'objet traceeEtoile au-dessus de l'objet de jeu en utilisant sa position
             traceeEtoile.transform.position = gameObject.transform.position;
+
+            // Désactiver l'objet traceeEtoile
             traceeEtoile.SetActive(false);
         }
 
+        // Si un objet etoileEclatante est attaché à l'objet de jeu,
         if (etoileEclatante != null)
         {
+            // Activer l'objet etoileEclatante
             etoileEclatante.SetActive(true);
+
+            // Positionner l'objet etoileEclatante au-dessus de l'objet de jeu en utilisant sa position
             etoileEclatante.transform.position = gameObject.transform.position;
         }
     }

@@ -23,7 +23,7 @@ public class GererAudio : MonoBehaviour
     private AudioSource audioSourceMusiques;
 
     public static string[] exceptionsChansons = { "Une piste musicale d'exception", "Game Over" };
-    private string lastPlayedSong;
+    private string derniereChansonJouee;
 
     void Start()
     {
@@ -119,49 +119,48 @@ public class GererAudio : MonoBehaviour
     public void JouerMusiqueAleatoire(string[] exceptions)
     {
         // Créer une liste de toutes les clés du dictionnaire de pistes musicales
-        List<string> keys = new List<string>(pistesMusicalesDict.Keys);
+        List<string> clee = new List<string>(pistesMusicalesDict.Keys);
 
         // Supprimer toutes les clés des pistes spécifiées dans la liste d'exceptions
         for (int i = 0; i < exceptions.Length; i++)
-        {
             if (pistesMusicalesDict.ContainsKey(exceptions[i]))
-            {
-                keys.Remove(exceptions[i]);
-            }
-        }
+                clee.Remove(exceptions[i]);
 
         // Retirer la dernière chanson jouée de la liste des clés
-        if (!string.IsNullOrEmpty(lastPlayedSong))
+        if (!string.IsNullOrEmpty(derniereChansonJouee))
         {
-            keys.Remove(lastPlayedSong);
+            clee.Remove(derniereChansonJouee);
         }
 
         // Choisir aléatoirement une clé parmi les clés restantes
-        int index = Random.Range(0, keys.Count);
-        string randomKey = keys[index];
+        int index = Random.Range(0, clee.Count);
+        string cleeAleatoire = clee[index];
 
         // Jouer la piste musicale correspondant à la clé choisie
-        JouerPisteMusicale(randomKey);
+        JouerPisteMusicale(cleeAleatoire);
 
         // Sauvegarder la dernière chanson jouée
-        lastPlayedSong = randomKey;
+        derniereChansonJouee = cleeAleatoire;
     }
 
     public IEnumerator GameOverRoutine()
     {
-        // Gradually lower the music volume
-        float startingVolume = audioSourceMusiques.volume;
-        float fadeDuration = 2f;
-        float elapsedTime = 0f;
-        while (elapsedTime < fadeDuration)
+        // Initialiser les valeurs du temps et du volume
+        float volumeDemarrage = audioSourceMusiques.volume;
+        float durationTransition = 2f;
+        float tempsEcroule = 0f;
+
+        // Tant que le temps de diminution de musique n'est pas écroulé,
+        while (tempsEcroule < durationTransition)
         {
-            elapsedTime += Time.deltaTime;
-            float t = Mathf.Clamp01(elapsedTime / fadeDuration);
-            audioSourceMusiques.volume = Mathf.Lerp(startingVolume, 0f, t);
+            // Baisser graduellement le volume de la musique
+            tempsEcroule += Time.deltaTime;
+            float t = Mathf.Clamp01(tempsEcroule / durationTransition);
+            audioSourceMusiques.volume = Mathf.Lerp(volumeDemarrage, 0f, t);
             yield return null;
         }
 
-        // Play game over sound effect
+        // Jouer l'effet sonore de partie terminée
         JouerEffetSonore("Failure 02");
     }
 }
