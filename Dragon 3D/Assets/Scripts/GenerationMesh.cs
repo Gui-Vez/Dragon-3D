@@ -286,7 +286,8 @@ public class GenerationMesh : MonoBehaviour
 
         // Recalculer l'éclairage et le shading de la surface du mesh
         mesh.RecalculateNormals();
-        // Recalculer la boîte englobante du mesh (afin de faire du "culling" en enlevant la partie inférieure pour sauver des ressources)
+        // Recalculer la boîte englobante du mesh (afin de faire du "culling"
+        // en enlevant la partie inférieure pour sauver des ressources)
         mesh.RecalculateBounds();
 
         // Créer la collision du mesh et l'appliquer
